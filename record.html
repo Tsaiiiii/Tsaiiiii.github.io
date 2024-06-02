@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>影片配音平台</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column; /* 让内容以列的形式排列 */
+        }
+        .topbar {
+            background-color: #333; /* 设置背景色 */
+            color: white; /* 设置文字颜色 */
+            padding: 10px; /* 设置内边距 */
+            text-align: center; /* 文字居中 */
+        }
+        /*.container3 {
+            display: flex; /* 使用 Flexbox 布局 */
+            /*flex: 1; /* 让 container 占据剩余的所有空间 */
+/*        }*/
+        .container1 {
+            display: flex;
+            /*justify-content: space-between; /* 让内容水平均匀分布 */
+            width: 110%; /* 设置容器宽度 */
+            margin-bottom: 20px; /* 设置容器之间的间距 */
+        }
+        .container2 {
+            display: flex;
+            flex-direction: column; /* 让内容垂直排列 */
+            align-items: left; /* 让内容水平居中 */
+            width: 80%; /* 设置容器宽度 */
+        }
+        #sidebar {
+            width: 200px;
+            background-color: #cfe2f3;
+            padding: 10px;
+        }
+        #sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        #sidebar ul li {
+            margin: 5px 0;
+            cursor: pointer;
+        }
+        /*#mainContent {
+            flex: 1; /* 让 mainContent 占据剩余的所有空间 */
+/*            padding: 20px;*/
+/*        }*/
+        .mainContent {
+            flex: 1;
+            padding: 20px;
+            display: none; /* 隐藏所有主要内容 */
+        }
+        #mainContent1, #mainContent2 {
+            flex: 1; /* 让 mainContent 占据剩余的所有空间 */
+            padding: 20px;
+        }
+        #prompt {
+            background-color: #ddd;
+            font-size: 35px;
+            padding: 0.05em;
+            text-align: center;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+        .myButton {
+            background-color: #6fa8dc; /* 设置背景颜色 */
+            border: none; /* 移除边框 */
+            color: white; /* 设置文字颜色 */
+            padding: 15px 32px; /* 设置内边距 */
+            text-align: center; /* 文字居中 */
+            text-decoration: none; /* 移除下划线 */
+            display: inline-block; /* 将按钮转换为内联块级元素 */
+            font-size: 20px; /* 设置字体大小 */
+            margin: 4px 2px; /* 设置外边距 */
+            cursor: pointer; /* 鼠标指针样式为手型 */
+            border-radius: 8px; /* 设置圆角 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container2">
+        <div id="topnav">
+            <div class="container1">
+                <!-- <h1>影片配音平台</h1> -->
+                <button class="myButton" onclick="showMainContent('mainContent1')">練習</button>
+                <button class="myButton" onclick="showMainContent('mainContent2')">配音</button>
+            </div>
+        </div>
+
+        
+
+        <div class="container1">
+
+            <div id="sidebar">
+                <h2>影片列表</h2>
+                <ul id="videoList">
+                </ul>
+            </div>
+
+            <div id="mainContent1" class="mainContent">
+                <video controls width="900" id="practiceVideo">
+                    <track kind="subtitles" label="English" srclang="en" src="subtitles.vtt" default>
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <div id="mainContent2" class="mainContent">
+                <!-- <div id="prompt">
+                    <p>Your Turn!</p>
+                </div> -->
+
+                <video controls width="900" id="videoElement">
+                    <!-- <track kind="subtitles" label="English" srclang="en" src="subtitles.vtt" default> -->
+                    Your browser does not support the video tag.
+                </video>
+                <br><br>
+                <div class="container1">
+
+                    <h2>配音人物</h2>
+                    <select id="muteCharacter" onchange="muteCharacterChange()">
+                        <!-- 人物选项将在JavaScript中生成 -->
+                    </select>
+
+                    <blockquote></blockquote>
+
+                    <h2>配音</h2>
+                    <button class="myButton" onclick="startRecording()">開始配音</button>
+                    <button class="myButton" onclick="stopRecording()">停止配音</button>
+                    <button class="myButton" onclick="playRecordedAudio()">播放配音</button>
+                    <audio id="recordedAudio" style="display: none;"></audio>
+                </div> 
+            </div>
+        </div> 
+    </div>
+
+    <script src="videoFiles.js"></script>
+    <script>
+        let mediaRecorder;
+        let recordedChunks = [];
+        let recordedAudioURL;
+        let audio;
+        let currentVideoKey = null;
+
+        function showMainContent(contentId) {
+            // 隐藏所有 mainContent
+            const mainContents = document.querySelectorAll('.mainContent');
+            mainContents.forEach(content => {
+                content.style.display = 'none';
+            });
+
+            // 显示指定的 mainContent
+            const targetContent = document.getElementById(contentId);
+            if (targetContent) {
+                targetContent.style.display = 'block';
+            }
+        }
+
+        let audioContext;
+
+        async function startRecording() {
+            // 清除之前的錄音數據
+            recordedChunks = [];
+            
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.ondataavailable = handleDataAvailable;
+            mediaRecorder.start();
+
+            const videoElement = document.getElementById('videoElement');
+            videoElement.play(); 
+
+            // 创建 AudioContext
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();       
+        }
+
+        function handleDataAvailable(event) {
+            if (event.data.size > 0) {
+                recordedChunks.push(event.data);
+            }
+        }
+
+        async function stopRecording() {
+            mediaRecorder.stop();
+            const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+            recordedAudioURL = URL.createObjectURL(blob);
+            recordedChunks = [];
+
+            const videoElement = document.getElementById('videoElement');
+            videoElement.pause();
+
+            // 关闭 AudioContext
+            audioContext.close();
+        }
+
+        async function playRecordedAudio() {
+            await stopRecording(); // 等待錄音停止並處理數據
+
+            const recordedAudioElement = document.getElementById('recordedAudio');
+            recordedAudioElement.src = recordedAudioURL;
+            recordedAudioElement.style.display = 'block'; // 顯示錄音播放元件
+            recordedAudioElement.controls = true;
+            recordedAudioElement.play();
+
+            const videoElement = document.getElementById('videoElement');
+            const videoSource = audioContext.createMediaElementSource(videoElement);
+            const recordedSource = audioContext.createMediaElementSource(recordedAudioElement);
+            const merger = audioContext.createChannelMerger(2); // 创建音频合并节点
+
+            // 将视频和录音节点连接到音频合并节点
+            videoSource.connect(merger);
+            recordedSource.connect(merger);
+
+            // 创建输出节点并连接到音频合并节点
+            const destination = audioContext.destination;
+            merger.connect(destination);
+
+            recordedAudioElement.play();
+            videoElement.play(); // 同时播放视频
+        }
+
+        function loadVideoList() {
+            const videoListElement = document.getElementById('videoList');
+            Object.keys(videoFiles).forEach((key) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = key;
+                listItem.dataset.videoKey = key;
+                listItem.onclick = () => {
+                    document.querySelectorAll('#videoList li').forEach((li) => {
+                        li.classList.remove('selected');
+                    });
+                    listItem.classList.add('selected');
+                    selectVideo(key);
+                };
+                videoListElement.appendChild(listItem);
+            });
+
+            // 自动选择第一个视频
+            const firstVideoListItem = videoListElement.querySelector('li');
+            if (firstVideoListItem) {
+                firstVideoListItem.classList.add('selected');
+                firstVideoListItem.click();
+            }
+        }
+
+        function selectVideo(videoKey) {
+            currentVideoKey = videoKey;
+            const videoElement = document.getElementById('videoElement');
+            const muteCharacterSelect = document.getElementById('muteCharacter');
+            const practiceVideoElement = document.getElementById('practiceVideo');
+            const selectedCharacter = muteCharacterSelect.value;
+            const prompt = document.getElementById('prompt');
+
+            muteCharacterSelect.innerHTML = '';
+
+            for (const character in videoFiles[videoKey].muteSegments) {
+                const option = document.createElement('option');
+                option.value = character;
+                option.textContent = character;
+                muteCharacterSelect.appendChild(option);
+            }
+
+            // 恢复之前选择的人物
+            muteCharacterSelect.value = selectedCharacter || '';
+
+            if (audio) {
+                audio.pause();
+                audio.src = '';
+                audio = null;
+            }
+
+            // 加載新音頻
+            audio = new Audio(videoFiles[videoKey].audioSrc);
+
+            // 設置影片源
+            videoElement.src = videoFiles[videoKey].src;
+            videoElement.muted = true; // 將影片靜音
+            videoElement.load(); // 加載新影片
+
+             // 设置练习视频源
+            practiceVideoElement.src = videoFiles[videoKey].src;
+            practiceVideoElement.muted = false;
+            practiceVideoElement.load();
+
+            // 監聽影片播放事件，在播放時播放對應的音訊
+            videoElement.addEventListener('play', function() {
+                audio.play();
+            });
+
+            videoElement.addEventListener('pause', function() {
+                audio.pause();
+            });
+
+            videoElement.addEventListener('timeupdate', function() {
+                const currentTime = videoElement.currentTime;
+                audio.currentTime = currentTime;
+                const muteCharacter = muteCharacterSelect.value;
+                if (muteCharacter && videoFiles[videoKey].muteSegments[muteCharacter]) {
+                    const muteSegments = videoFiles[videoKey].muteSegments[muteCharacter];
+                    
+                    let isMuted = false;
+                    for (const segment of muteSegments) {
+                        if (currentTime >= segment.start && currentTime <= segment.end) {
+                            isMuted = true;
+                            break;
+                        }
+                    }
+                    audio.muted = isMuted;
+
+                    if (isMuted) {
+                        prompt.style.display = 'block';
+                    } else {
+                        prompt.style.display = 'none';
+                    }
+                } else {
+                    audio.muted = false;
+                    prompt.style.display = 'none';
+                }
+            });
+
+            videoElement.addEventListener('seeked', function() {
+                audio.currentTime = videoElement.currentTime;
+            });
+
+            videoElement.load();
+        }
+
+        function muteCharacterChange() {
+            if (currentVideoKey) {
+                selectVideo(currentVideoKey);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadVideoList();
+        });
+    </script>
+</body>
+</html>
