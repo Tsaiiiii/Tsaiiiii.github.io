@@ -5,16 +5,15 @@ const videoFiles = {
         "subtitlesSrc": "subtitles2.vtt",
         "muteSegments": {
             "Jonathan": [
-                { "start": 0.25, "end": 0.80 },
-                { "start": 3.988, "end": 6.510 },
+                { "start": 1.25, "end": 3.806 },
+                { "start": 6.85, "end": 7.966 },
+                { "start": 10.93, "end": 12.106 },
                 { "start": 13.092, "end": 16.414 },
                 { "start": 21.57, "end": 24.32 },
                 { "start": 38.06, "end": 39.590 }
             ],
             "Pete": [
-                { "start": 1.25, "end": 3.806 },
-                { "start": 6.85, "end": 7.966 },
-                { "start": 10.93, "end": 12.106 },
+                { "start": 3.988, "end": 6.510 },
                 { "start": 25.05, "end": 30.246 },
                 { "start": 31.69, "end": 34.918 }
             ],

@@ -310,6 +310,7 @@
             track.srclang = 'en';
             track.src = videoFiles[videoKey].subtitlesSrc;
             videoElement.appendChild(track);
+            practiceVideoElement.appendChild(track);
 
             // 監聽影片播放事件，在播放時播放對應的音訊
             videoElement.addEventListener('play', function() {
