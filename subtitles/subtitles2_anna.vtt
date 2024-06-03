@@ -1,5 +1,24 @@
 WEBVTT
 
+REGION
+id: subtitleRegion
+width: 80%
+lines: 3
+regionanchor: 0%, 100%
+viewportanchor: 0%, 100%
+
+STYLE
+::cue {
+  position: absolute;
+  top: 80%;
+  left: 10%;
+}
+
+作者：不裁_caiii
+链接：https://juejin.cn/post/7281486153416753167
+来源：稀土掘金
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 1
 00:00:01.250 --> 00:00:03.806
 Hey, Pete. Who's your friend?
