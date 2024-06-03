@@ -81,53 +81,13 @@
             cursor: pointer; /* 鼠标指针样式为手型 */
             border-radius: 8px; /* 设置圆角 */
         }
-        .subtitle-container {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 1); /* 设置黑色背景且完全不透明 */
-            color: white;
-            padding: 50px;
-            text-align: center;
-            height: 0%; 
-/*            box-sizing: content-box;*/
-        }
-        .subtitle {
-            font-size: 50pt;
-        }
-        .muted-subtitle {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 1); /* 设置黑色背景且完全不透明 */
-            color: white;
-            padding: 50px;
-            text-align: center;
-            height: 0%;
-            color: red; /* 设置静音片段的字幕颜色 */
-        }
-
-        .normal-subtitle {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 1); /* 设置黑色背景且完全不透明 */
-            color: white;
-            padding: 50px;
-            text-align: center;
-            height: 0%;
-            color: white; /* 设置正常片段的字幕颜色 */
-        }
         ::cue {
             color: white; /* 设置字幕文本颜色 */
             background-color: darkblue;
             font-size: 50px; /* 设置字幕字体大小 */
         }
-        ::cue(muted) {
-            color: red; /* 设置静音片段的字幕颜色 */
+        ::cue(.red) {
+            color: red;
         }
     </style>
 </head>
@@ -397,41 +357,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadVideoList();
         });
-
-        // // Function to display subtitles
-        // function displaySubtitles(text) {
-        //     const subtitleContainer = document.getElementById('subtitle-container');
-        //     subtitleContainer.textContent = text;
-        //     subtitleContainer.style.display = 'block';
-        // }
-
-        // // Function to hide subtitles
-        // function hideSubtitles() {
-        //     const subtitleContainer = document.getElementById('subtitle-container');
-        //     subtitleContainer.textContent = '';
-        //     subtitleContainer.style.display = 'none';
-        // }
-
-        // // Function to check and display subtitles based on current time
-        // function checkSubtitles() {
-        //     if (currentVideoKey && videoFiles[currentVideoKey].subtitles) {
-        //         const currentTime = videoElement.currentTime;
-        //         const subtitles = videoFiles[currentVideoKey].subtitles;
-        //         const track = videoElement.querySelector('track[kind="subtitles"]');
-        //         let cue;
-        //         for (const subtitle of subtitles) {
-        //             if (currentTime >= subtitle.start && currentTime <= subtitle.end) {
-        //                 cue = new VTTCue(subtitle.start, subtitle.end, subtitle.text);
-        //                 track.addCue(cue);
-        //                 return;
-        //             }
-        //         }
-        //         track.removeCue(cue); // 如果没有匹配的字幕，移除之前的字幕
-        //     }
-        // }
-
-        // // Check subtitles when video is playing
-        // videoElement.addEventListener('timeupdate', checkSubtitles);
     </script>
 </body>
 </html>
