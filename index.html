@@ -126,7 +126,9 @@
             background-color: darkblue;
             font-size: 50px; /* 设置字幕字体大小 */
         }
-
+        ::cue(muted) {
+            color: red; /* 设置静音片段的字幕颜色 */
+        }
     </style>
 </head>
 <body>
@@ -161,7 +163,7 @@
                 </div> -->
 
                 <video controls width="900" id="videoElement">
-                    <track kind="metadata" label="English" srclang="en" default>
+                    <track kind="subtitles" label="English" srclang="en" default>
                     Your browser does not support the video tag.
                 </video>
                 <br><br>
@@ -303,7 +305,7 @@
             const selectedCharacter = muteCharacterSelect.value;
             const prompt = document.getElementById('prompt');
             // const subtitleContainer = document.getElementById('subtitleContainer'); // 添加这一行
-            const subtitleElement = document.getElementById('subtitleElement');
+            // const subtitleElement = document.getElementById('subtitleElement');
 
             muteCharacterSelect.innerHTML = '';
 
@@ -336,7 +338,7 @@
             existingTracks.forEach(track => track.remove());
 
             const track = document.createElement('track');
-            track.kind = 'metadata';
+            track.kind = 'subtitles';
             track.label = 'English';
             track.srclang = 'en';
             track.src = videoFiles[videoKey].subtitlesSrc;
@@ -374,17 +376,12 @@
 
                     if (isMuted) {
                         prompt.style.display = 'block';
-                        // changeSubtitleColor(true);
-                        subtitleElement.style.color = 'red'; // 设置为红色
                     } else {
                         prompt.style.display = 'none';
-                        // changeSubtitleColor(false);
-                        subtitleElement.style.color = 'white';
                     }
                 } else {
                     audio.muted = false;
                     prompt.style.display = 'none';
-                    // changeSubtitleColor(false);
                 }
             });
 
@@ -433,17 +430,6 @@
                     }
                 }
                 hideSubtitles();
-            }
-        }
-
-        function changeSubtitleColor(isMuted) {
-            const subtitleContainer = document.getElementById('subtitleContainer');
-            if (isMuted) {
-                subtitleContainer.classList.add('muted-subtitle');
-                subtitleContainer.classList.remove('normal-subtitle');
-            } else {
-                subtitleContainer.classList.add('normal-subtitle');
-                subtitleContainer.classList.remove('muted-subtitle');
             }
         }
 
