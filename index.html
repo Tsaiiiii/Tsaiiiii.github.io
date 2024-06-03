@@ -97,10 +97,28 @@
             font-size: 50pt;
         }
         .muted-subtitle {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 1); /* 设置黑色背景且完全不透明 */
+            color: white;
+            padding: 50px;
+            text-align: center;
+            height: 0%;
             color: red; /* 设置静音片段的字幕颜色 */
         }
 
         .normal-subtitle {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 1); /* 设置黑色背景且完全不透明 */
+            color: white;
+            padding: 50px;
+            text-align: center;
+            height: 0%;
             color: white; /* 设置正常片段的字幕颜色 */
         }
     </style>
@@ -137,7 +155,7 @@
                 </div> -->
 
                 <video controls width="900" id="videoElement">
-                    <track class="subtitle" kind="subtitles" label="English" srclang="en" default>
+                    <track kind="subtitles" label="English" srclang="en" default>
                     Your browser does not support the video tag.
                 </video>
                 <br><br>
