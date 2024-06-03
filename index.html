@@ -86,15 +86,22 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background-color: rgb(0, 0, 0); /* 设置黑色背景且完全不透明 */
+            background-color: rgba(0, 0, 0, 1); /* 设置黑色背景且完全不透明 */
             color: white;
             padding: 50px;
             text-align: center;
             height: 0%; 
-            box-sizing: content-box;
+/*            box-sizing: content-box;*/
         }
         .subtitle {
-            font-size: 36pt;
+            font-size: 50pt;
+        }
+        .muted-subtitle {
+            color: red; /* 设置静音片段的字幕颜色 */
+        }
+
+        .normal-subtitle {
+            color: white; /* 设置正常片段的字幕颜色 */
         }
     </style>
 </head>
