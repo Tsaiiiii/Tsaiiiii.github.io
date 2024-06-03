@@ -296,6 +296,7 @@
             const practiceVideoElement = document.getElementById('practiceVideo');
             const selectedCharacter = muteCharacterSelect.value;
             const prompt = document.getElementById('prompt');
+            const subtitleContainer = document.getElementById('subtitleContainer'); // 添加这一行
 
             muteCharacterSelect.innerHTML = '';
 
@@ -383,6 +384,8 @@
             });
 
             videoElement.load();
+
+            changeSubtitleColor(false);
         }
 
         function muteCharacterChange() {
