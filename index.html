@@ -141,8 +141,6 @@
             </div>
         </div>
 
-        
-
         <div class="container1">
 
             <div id="sidebar">
@@ -331,7 +329,7 @@
             videoElement.muted = true; // 將影片靜音
             videoElement.load(); // 加載新影片
 
-            Clear existing subtitles tracks
+            // Clear existing subtitles tracks
             const existingTracks = videoElement.querySelectorAll('track');
             existingTracks.forEach(track => track.remove());
 
@@ -388,8 +386,6 @@
             });
 
             videoElement.load();
-
-            // changeSubtitleColor(false);
         }
 
         function muteCharacterChange() {
