@@ -337,12 +337,12 @@
             const existingTracks = videoElement.querySelectorAll('track');
             existingTracks.forEach(track => track.remove());
 
-            const track = document.createElement('track');
-            track.kind = 'subtitles';
-            track.label = 'English';
-            track.srclang = 'en';
-            track.src = videoFiles[videoKey].subtitlesSrc;
-            videoElement.appendChild(track);
+            // const track = document.createElement('track');
+            // track.kind = 'subtitles';
+            // track.label = 'English';
+            // track.srclang = 'en';
+            // track.src = videoFiles[videoKey].subtitlesSrc;
+            // videoElement.appendChild(track);
 
              // 设置练习视频源
             practiceVideoElement.src = videoFiles[videoKey].src;
@@ -406,14 +406,14 @@
 
         // Function to display subtitles
         function displaySubtitles(text) {
-            const subtitleContainer = document.getElementById('subtitleContainer');
+            const subtitleContainer = document.getElementById('subtitle-container');
             subtitleContainer.textContent = text;
             subtitleContainer.style.display = 'block';
         }
 
         // Function to hide subtitles
         function hideSubtitles() {
-            const subtitleContainer = document.getElementById('subtitleContainer');
+            const subtitleContainer = document.getElementById('subtitle-container');
             subtitleContainer.textContent = '';
             subtitleContainer.style.display = 'none';
         }
