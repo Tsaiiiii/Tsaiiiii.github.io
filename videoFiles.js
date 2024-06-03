@@ -2,6 +2,7 @@ const videoFiles = {
     "Lesson 2: Hello! I'm Anna!": {
         "src": "mp4/video2.mp4",
         "audioSrc": "wav/2_wav.wav",
+        "subtitlesSrc": "subtitles2.vtt"
         "muteSegments": {
             "Jonathan": [
                 { "start": 0.25, "end": 0.80 },
@@ -26,23 +27,23 @@ const videoFiles = {
                 { "start": 42.01, "end": 44.92 }
             ]
         },
-        "subtitles": [
-            { "start": 0.25, "end": 0.80, "text": "Hey, Pete. Who's your friend?" },
-            { "start": 1.25, "end": 3.806, "text": "She is Anna. She is new to DC." },
-            { "start": 3.988, "end": 6.510, "text": "Where are you from?" },
-            { "start": 8.068, "end": 10.19, "text": "I am from a small town." },
-            { "start": 10.52, "end": 12.974, "text": "Welcome to DC." },
-            { "start": 12.218, "end": 12.974, "text": "Thank you." },
-            { "start": 13.092, "end": 16.414, "text": "I'm Jonathan. I'm in apartment B four." },
-            { "start": 16.612, "end": 21.15, "text": "I am in apartment C two. Marsha is my roommate." },
-            { "start": 21.57, "end": 24.32, "text": "I know Marsha. She is nice." },
-            { "start": 25.05, "end": 30.246, "text": "And I am in apartment D. Seven. I have to go now." },
-            { "start": 30.428, "end": 31.16, "text": "Oh." },
-            { "start": 31.69, "end": 34.918, "text": "Remember to call Marsha at work. Tell her you're here." },
-            { "start": 35.004, "end": 37.99, "text": "Right. Thanks, Pete. Nice to meet you." },
-            { "start": 38.06, "end": 39.590, "text": "You too. Bye." },
-            { "start": 42.01, "end": 44.92, "text": "Apartment C two. Here I come." }
-        ]
+        // "subtitles": [
+        //     { "start": 0.25, "end": 0.80, "text": "Hey, Pete. Who's your friend?" },
+        //     { "start": 1.25, "end": 3.806, "text": "She is Anna. She is new to DC." },
+        //     { "start": 3.988, "end": 6.510, "text": "Where are you from?" },
+        //     { "start": 8.068, "end": 10.19, "text": "I am from a small town." },
+        //     { "start": 10.52, "end": 12.974, "text": "Welcome to DC." },
+        //     { "start": 12.218, "end": 12.974, "text": "Thank you." },
+        //     { "start": 13.092, "end": 16.414, "text": "I'm Jonathan. I'm in apartment B four." },
+        //     { "start": 16.612, "end": 21.15, "text": "I am in apartment C two. Marsha is my roommate." },
+        //     { "start": 21.57, "end": 24.32, "text": "I know Marsha. She is nice." },
+        //     { "start": 25.05, "end": 30.246, "text": "And I am in apartment D. Seven. I have to go now." },
+        //     { "start": 30.428, "end": 31.16, "text": "Oh." },
+        //     { "start": 31.69, "end": 34.918, "text": "Remember to call Marsha at work. Tell her you're here." },
+        //     { "start": 35.004, "end": 37.99, "text": "Right. Thanks, Pete. Nice to meet you." },
+        //     { "start": 38.06, "end": 39.590, "text": "You too. Bye." },
+        //     { "start": 42.01, "end": 44.92, "text": "Apartment C two. Here I come." }
+        // ]
     },
     "Lesson 20: What Can You Do?": {
         src: "mp4/video20.mp4",

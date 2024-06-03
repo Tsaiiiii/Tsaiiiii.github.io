@@ -81,16 +81,20 @@
             cursor: pointer; /* 鼠标指针样式为手型 */
             border-radius: 8px; /* 设置圆角 */
         }
-        #subtitleContainer {
+        .subtitle-container {
             position: absolute;
             bottom: 0;
+            left: 0;
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: black;
             color: white;
-            text-align: center;
             padding: 10px;
-            display: none; /* Initially hidden */
-            font-size: 20px;
+            text-align: center;
+            height: 25%; /* 占据屏幕底部四分之一的高度 */
+            box-sizing: border-box;
+        }
+        .subtitle {
+            font-size: 18px;
         }
     </style>
 </head>
@@ -116,7 +120,7 @@
 
             <div id="mainContent1" class="mainContent">
                 <video controls width="900" id="practiceVideo">
-                    <!-- <track kind="subtitles" label="English" srclang="en" src="subtitles.vtt" default> -->
+                    <track kind="subtitles" label="English" srclang="en" default>
                     Your browser does not support the video tag.
                 </video>
             </div>
@@ -127,7 +131,7 @@
                 </div> -->
 
                 <video controls width="900" id="videoElement">
-                    <!-- <track kind="subtitles" label="English" srclang="en" src="subtitles.vtt" default> -->
+                    <track kind="subtitles" label="English" srclang="en" default>
                     Your browser does not support the video tag.
                 </video>
                 <br><br>
@@ -295,6 +299,13 @@
             videoElement.muted = true; // 將影片靜音
             videoElement.load(); // 加載新影片
 
+            const track = document.createElement('track');
+            track.kind = 'subtitles';
+            track.label = 'English';
+            track.srclang = 'en';
+            track.src = videoFiles[videoKey].subtitlesSrc;
+            videoElement.appendChild(track);
+
              // 设置练习视频源
             practiceVideoElement.src = videoFiles[videoKey].src;
             practiceVideoElement.muted = false;
@@ -352,7 +363,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadVideoList();
         });
-        
+
         // Function to display subtitles
         function displaySubtitles(text) {
             const subtitleContainer = document.getElementById('subtitleContainer');
