@@ -2,7 +2,11 @@ const videoFiles = {
     "Lesson 2: Hello! I'm Anna!": {
         "src": "mp4/video2.mp4",
         "audioSrc": "wav/2_wav.wav",
-        "subtitlesSrc": "subtitles2.vtt",
+        "subtitlesSrc": {
+            "Jonathan": "subtitles/subtitles2_jonathan.vtt",
+            "Pete": "subtitles/subtitles2_pete.vtt",
+            "Anna": "subtitles/subtitles2_anna.vtt"
+        },
         "muteSegments": {
             "Jonathan": [
                 { "start": 1.25, "end": 3.806 },

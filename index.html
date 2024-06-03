@@ -293,12 +293,24 @@
             const existingTracks = videoElement.querySelectorAll('track');
             existingTracks.forEach(track => track.remove());
 
-            const track = document.createElement('track');
-            track.kind = 'subtitles';
-            track.label = 'English';
-            track.srclang = 'en';
-            track.src = videoFiles[videoKey].subtitlesSrc;
-            videoElement.appendChild(track);
+            const character = muteCharacterSelect.value;
+            const subtitleSrc = videoFiles[videoKey].subtitlesSrc[character];
+            if (subtitleSrc) {
+                const track = document.createElement('track');
+                track.kind = 'subtitles';
+                track.label = 'English';
+                track.srclang = 'en';
+                track.src = subtitleSrc;
+                track.default = true;
+                videoElement.appendChild(track);
+            }
+
+            // const track = document.createElement('track');
+            // track.kind = 'subtitles';
+            // track.label = 'English';
+            // track.srclang = 'en';
+            // track.src = videoFiles[videoKey].subtitlesSrc;
+            // videoElement.appendChild(track);
 
              // 设置练习视频源
             practiceVideoElement.src = videoFiles[videoKey].src;
