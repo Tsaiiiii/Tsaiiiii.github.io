@@ -91,7 +91,7 @@
             padding: 50px;
             text-align: center;
             height: 0%; 
-            box-sizing: border-box;
+            box-sizing: content-box;
         }
         .subtitle {
             font-size: 30px;
@@ -299,18 +299,17 @@
             videoElement.muted = true; // 將影片靜音
             videoElement.load(); // 加載新影片
 
-             // 设置练习视频源
-            practiceVideoElement.src = videoFiles[videoKey].src;
-            practiceVideoElement.muted = false;
-            practiceVideoElement.load();
-
             const track = document.createElement('track');
             track.kind = 'subtitles';
             track.label = 'English';
             track.srclang = 'en';
             track.src = videoFiles[videoKey].subtitlesSrc;
             videoElement.appendChild(track);
-            practiceVideoElement.appendChild(track);
+
+             // 设置练习视频源
+            practiceVideoElement.src = videoFiles[videoKey].src;
+            practiceVideoElement.muted = false;
+            practiceVideoElement.load();
 
             // 監聽影片播放事件，在播放時播放對應的音訊
             videoElement.addEventListener('play', function() {
