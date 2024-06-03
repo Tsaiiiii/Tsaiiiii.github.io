@@ -25,7 +25,7 @@ const videoFiles = {
             ]
         },
         "subtitles": [
-            { "start": 1.25, "end": 3.806, "text": "Hey, Pete. Who's your fri"end"?" },
+            { "start": 1.25, "end": 3.806, "text": "Hey, Pete. Who's your friend?" },
             { "start": 3.988, "end": 6.510, "text": "She is Anna. She is new to DC." },
             { "start": 6.85, "end": 7.966, "text": "Where are you from?" },
             { "start": 8.068, "end": 10.19, "text": "I am from a small town." },
