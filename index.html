@@ -81,6 +81,17 @@
             cursor: pointer; /* 鼠标指针样式为手型 */
             border-radius: 8px; /* 设置圆角 */
         }
+        #subtitleContainer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            display: none; /* Initially hidden */
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
@@ -105,7 +116,7 @@
 
             <div id="mainContent1" class="mainContent">
                 <video controls width="900" id="practiceVideo">
-                    <track kind="subtitles" label="English" srclang="en" src="subtitles.vtt" default>
+                    <!-- <track kind="subtitles" label="English" srclang="en" src="subtitles.vtt" default> -->
                     Your browser does not support the video tag.
                 </video>
             </div>
@@ -116,7 +127,7 @@
                 </div> -->
 
                 <video controls width="900" id="videoElement">
-                    <track kind="subtitles" label="English" srclang="en" src="subtitles.vtt" default>
+                    <!-- <track kind="subtitles" label="English" srclang="en" src="subtitles.vtt" default> -->
                     Your browser does not support the video tag.
                 </video>
                 <br><br>
@@ -166,16 +177,12 @@
         async function startRecording() {
             // 清除之前的錄音數據
             recordedChunks = [];
-            
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             mediaRecorder = new MediaRecorder(stream);
             mediaRecorder.ondataavailable = handleDataAvailable;
             mediaRecorder.start();
-
             const videoElement = document.getElementById('videoElement');
             videoElement.play(); 
-
-            // 创建 AudioContext
             audioContext = new (window.AudioContext || window.webkitAudioContext)();       
         }
 
@@ -190,11 +197,8 @@
             const blob = new Blob(recordedChunks, { type: 'audio/webm' });
             recordedAudioURL = URL.createObjectURL(blob);
             recordedChunks = [];
-
             const videoElement = document.getElementById('videoElement');
             videoElement.pause();
-
-            // 关闭 AudioContext
             audioContext.close();
         }
 
@@ -205,23 +209,32 @@
             recordedAudioElement.src = recordedAudioURL;
             recordedAudioElement.style.display = 'block'; // 顯示錄音播放元件
             recordedAudioElement.controls = true;
-            recordedAudioElement.play();
+            // recordedAudioElement.play();
 
             const videoElement = document.getElementById('videoElement');
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
             const videoSource = audioContext.createMediaElementSource(videoElement);
             const recordedSource = audioContext.createMediaElementSource(recordedAudioElement);
             const merger = audioContext.createChannelMerger(2); // 创建音频合并节点
 
-            // 将视频和录音节点连接到音频合并节点
-            videoSource.connect(merger);
-            recordedSource.connect(merger);
+            videoSource.connect(merger, 0, 0);
+            recordedSource.connect(merger, 0, 1);
+            merger.connect(audioContext.destination);
 
-            // 创建输出节点并连接到音频合并节点
-            const destination = audioContext.destination;
-            merger.connect(destination);
+            recordedAudioElement.addEventListener('play', () => {
+                videoElement.currentTime = recordedAudioElement.currentTime;
+                videoElement.play();
+            });
+
+            recordedAudioElement.addEventListener('pause', () => {
+                videoElement.pause();
+            });
+
+            recordedAudioElement.addEventListener('timeupdate', () => {
+                videoElement.currentTime = recordedAudioElement.currentTime;
+            });
 
             recordedAudioElement.play();
-            videoElement.play(); // 同时播放视频
         }
 
         function loadVideoList() {
@@ -339,6 +352,38 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadVideoList();
         });
+        
+        // Function to display subtitles
+        function displaySubtitles(text) {
+            const subtitleContainer = document.getElementById('subtitleContainer');
+            subtitleContainer.textContent = text;
+            subtitleContainer.style.display = 'block';
+        }
+
+        // Function to hide subtitles
+        function hideSubtitles() {
+            const subtitleContainer = document.getElementById('subtitleContainer');
+            subtitleContainer.textContent = '';
+            subtitleContainer.style.display = 'none';
+        }
+
+        // Function to check and display subtitles based on current time
+        function checkSubtitles() {
+            if (currentVideoKey && videoFiles[currentVideoKey].subtitles) {
+                const currentTime = videoElement.currentTime;
+                const subtitles = videoFiles[currentVideoKey].subtitles;
+                for (const subtitle of subtitles) {
+                    if (currentTime >= subtitle.start && currentTime <= subtitle.end) {
+                        displaySubtitles(subtitle.text);
+                        return;
+                    }
+                }
+                hideSubtitles();
+            }
+        }
+
+        // Check subtitles when video is playing
+        videoElement.addEventListener('timeupdate', checkSubtitles);
     </script>
 </body>
 </html>
