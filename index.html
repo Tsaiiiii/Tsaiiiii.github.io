@@ -334,8 +334,8 @@
             videoElement.load(); // 加載新影片
 
             // Clear existing subtitles tracks
-            const existingTracks = videoElement.querySelectorAll('track');
-            existingTracks.forEach(track => track.remove());
+            // const existingTracks = videoElement.querySelectorAll('track');
+            // existingTracks.forEach(track => track.remove());
 
             // const track = document.createElement('track');
             // track.kind = 'subtitles';
@@ -423,13 +423,16 @@
             if (currentVideoKey && videoFiles[currentVideoKey].subtitles) {
                 const currentTime = videoElement.currentTime;
                 const subtitles = videoFiles[currentVideoKey].subtitles;
+                const track = videoElement.querySelector('track[kind="subtitles"]');
+                let cue;
                 for (const subtitle of subtitles) {
                     if (currentTime >= subtitle.start && currentTime <= subtitle.end) {
-                        displaySubtitles(subtitle.text);
+                        cue = new VTTCue(subtitle.start, subtitle.end, subtitle.text);
+                        track.addCue(cue);
                         return;
                     }
                 }
-                hideSubtitles();
+                track.removeCue(cue); // 如果没有匹配的字幕，移除之前的字幕
             }
         }
 
