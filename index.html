@@ -304,8 +304,6 @@
             const practiceVideoElement = document.getElementById('practiceVideo');
             const selectedCharacter = muteCharacterSelect.value;
             const prompt = document.getElementById('prompt');
-            // const subtitleContainer = document.getElementById('subtitleContainer'); // 添加这一行
-            // const subtitleElement = document.getElementById('subtitleElement');
 
             muteCharacterSelect.innerHTML = '';
 
@@ -333,16 +331,16 @@
             videoElement.muted = true; // 將影片靜音
             videoElement.load(); // 加載新影片
 
-            // Clear existing subtitles tracks
-            // const existingTracks = videoElement.querySelectorAll('track');
-            // existingTracks.forEach(track => track.remove());
+            Clear existing subtitles tracks
+            const existingTracks = videoElement.querySelectorAll('track');
+            existingTracks.forEach(track => track.remove());
 
-            // const track = document.createElement('track');
-            // track.kind = 'subtitles';
-            // track.label = 'English';
-            // track.srclang = 'en';
-            // track.src = videoFiles[videoKey].subtitlesSrc;
-            // videoElement.appendChild(track);
+            const track = document.createElement('track');
+            track.kind = 'subtitles';
+            track.label = 'English';
+            track.srclang = 'en';
+            track.src = videoFiles[videoKey].subtitlesSrc;
+            videoElement.appendChild(track);
 
              // 设置练习视频源
             practiceVideoElement.src = videoFiles[videoKey].src;
@@ -404,40 +402,40 @@
             loadVideoList();
         });
 
-        // Function to display subtitles
-        function displaySubtitles(text) {
-            const subtitleContainer = document.getElementById('subtitle-container');
-            subtitleContainer.textContent = text;
-            subtitleContainer.style.display = 'block';
-        }
+        // // Function to display subtitles
+        // function displaySubtitles(text) {
+        //     const subtitleContainer = document.getElementById('subtitle-container');
+        //     subtitleContainer.textContent = text;
+        //     subtitleContainer.style.display = 'block';
+        // }
 
-        // Function to hide subtitles
-        function hideSubtitles() {
-            const subtitleContainer = document.getElementById('subtitle-container');
-            subtitleContainer.textContent = '';
-            subtitleContainer.style.display = 'none';
-        }
+        // // Function to hide subtitles
+        // function hideSubtitles() {
+        //     const subtitleContainer = document.getElementById('subtitle-container');
+        //     subtitleContainer.textContent = '';
+        //     subtitleContainer.style.display = 'none';
+        // }
 
-        // Function to check and display subtitles based on current time
-        function checkSubtitles() {
-            if (currentVideoKey && videoFiles[currentVideoKey].subtitles) {
-                const currentTime = videoElement.currentTime;
-                const subtitles = videoFiles[currentVideoKey].subtitles;
-                const track = videoElement.querySelector('track[kind="subtitles"]');
-                let cue;
-                for (const subtitle of subtitles) {
-                    if (currentTime >= subtitle.start && currentTime <= subtitle.end) {
-                        cue = new VTTCue(subtitle.start, subtitle.end, subtitle.text);
-                        track.addCue(cue);
-                        return;
-                    }
-                }
-                track.removeCue(cue); // 如果没有匹配的字幕，移除之前的字幕
-            }
-        }
+        // // Function to check and display subtitles based on current time
+        // function checkSubtitles() {
+        //     if (currentVideoKey && videoFiles[currentVideoKey].subtitles) {
+        //         const currentTime = videoElement.currentTime;
+        //         const subtitles = videoFiles[currentVideoKey].subtitles;
+        //         const track = videoElement.querySelector('track[kind="subtitles"]');
+        //         let cue;
+        //         for (const subtitle of subtitles) {
+        //             if (currentTime >= subtitle.start && currentTime <= subtitle.end) {
+        //                 cue = new VTTCue(subtitle.start, subtitle.end, subtitle.text);
+        //                 track.addCue(cue);
+        //                 return;
+        //             }
+        //         }
+        //         track.removeCue(cue); // 如果没有匹配的字幕，移除之前的字幕
+        //     }
+        // }
 
-        // Check subtitles when video is playing
-        videoElement.addEventListener('timeupdate', checkSubtitles);
+        // // Check subtitles when video is playing
+        // videoElement.addEventListener('timeupdate', checkSubtitles);
     </script>
 </body>
 </html>
