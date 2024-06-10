@@ -29,6 +29,74 @@ const videoFiles = {
             ]
         }
     },
+    "Lesson 3: I'm Here!": {
+        "src": "mp4/video3.mp4",
+        "audioSrc": "wav/3_wav.wav",
+    },
+    "Lesson 4: What Is It?": {
+        "src": "mp4/video4.mp4",
+        "audioSrc": "wav/4_wav.wav",
+    },
+    "Lesson 5: Where Are You?": {
+        "src": "mp4/video5.mp4",
+        "audioSrc": "wav/5_wav.wav",
+    },
+    "Lesson 6: Where Is the Gym?": {
+        "src": "mp4/video6.mp4",
+        "audioSrc": "wav/6_wav.wav",
+    },
+    "Lesson 7: What Are You Doing?": {
+        "src": "mp4/video7.mp4",
+        "audioSrc": "wav/7_wav.wav",
+    },
+    "Lesson 8: Are You Busy?": {
+        "src": "mp4/video8.mp4",
+        "audioSrc": "wav/8_wav.wav",
+    },
+    "Lesson 9: Is It Cold?": {
+        "src": "mp4/video9.mp4",
+        "audioSrc": "wav/9_wav.wav",
+    },
+    "Lesson 10: Come Over to My Place": {
+        "src": "mp4/video10.mp4",
+        "audioSrc": "wav/10_wav.wav",
+    },
+    "Lesson 11: This Is My Neighborhood": {
+        "src": "mp4/video11.mp4",
+        "audioSrc": "wav/11_wav.wav",
+    },
+    "Lesson 12: Meet My Family": {
+        "src": "mp4/video12.mp4",
+        "audioSrc": "wav/12_wav.wav",
+    },
+    "Lesson 13: Happy Birthday! William Shakespeare!": {
+        "src": "mp4/video13.mp4",
+        "audioSrc": "wav/13_wav.wav",
+    },
+    "Lesson 14: How About This?": {
+        "src": "mp4/video14.mp4",
+        "audioSrc": "wav/14_wav.wav",
+    },
+    "Lesson 15: I Love People-Watching!": {
+        "src": "mp4/video15.mp4",
+        "audioSrc": "wav/15_wav.wav",
+    },
+    "Lesson 16: Where Are You From?": {
+        "src": "mp4/video16.mp4",
+        "audioSrc": "wav/16_wav.wav",
+    },
+    "Lesson 17: Are You Free on Friday?": {
+        "src": "mp4/video17.mp4",
+        "audioSrc": "wav/17_wav.wav",
+    },
+    "Lesson 18: She Always Does That": {
+        "src": "mp4/video18.mp4",
+        "audioSrc": "wav/18_wav.wav",
+    },
+    "Lesson 19: When Do I Start?": {
+        "src": "mp4/video19.mp4",
+        "audioSrc": "wav/19_wav.wav",
+    },
     "Lesson 20: What Can You Do?": {
         src: "mp4/video20.mp4",
         audioSrc: "wav/20_wav.wav",
@@ -69,6 +137,22 @@ const videoFiles = {
                 { start: 198.3, end: 204.9 }
             ]
         }
+    },
+    "Lesson 21: Can You Come to the Party?": {
+        "src": "mp4/video21.mp4",
+        "audioSrc": "wav/21_wav.wav",
+    },
+    "Lesson 22: Next Summer...": {
+        "src": "mp4/video22.mp4",
+        "audioSrc": "wav/22_wav.wav",
+    },
+    "Lesson 23: What Do You Want?": {
+        "src": "mp4/video23.mp4",
+        "audioSrc": "wav/23_wav.wav",
+    },
+    "Lesson 24: Yesterday Was Amazing!": {
+        "src": "mp4/video24.mp4",
+        "audioSrc": "wav/24_wav.wav",
     },
     "Lesson 25: Watch Out": {
         src: "mp4/video25.mp4",

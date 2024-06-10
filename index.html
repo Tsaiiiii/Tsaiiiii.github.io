@@ -85,7 +85,7 @@
             color: white; /* 设置字幕文本颜色 */
             background: center / contain no-repeat url(""),
             #eee 35% url("https://i.pinimg.com/736x/ae/70/73/ae7073958cc76a0d5b637e42eb7af226.jpg");
-            font-size: 55px; /* 设置字幕字体大小 */
+            font-size: 50px; /* 设置字幕字体大小 */
         }
         ::cue(.red) {
             color: yellow;
@@ -128,17 +128,16 @@
                 <br><br>
                 <div class="container1">
 
-                    <h2>配音人物</h2>
+                    <h2>人物</h2>
                     <select id="muteCharacter" onchange="muteCharacterChange()">
                         <!-- 人物选项将在JavaScript中生成 -->
                     </select>
 
                     <blockquote></blockquote>
 
-                    <h2>配音</h2>
-                    <button class="myButton" onclick="startRecording()">開始配音</button>
-                    <button class="myButton" onclick="stopRecording()">停止配音</button>
-                    <button class="myButton" onclick="playRecordedAudio()">播放配音</button>
+                    <button class="myButton" onclick="startRecording()">開始</button>
+                    <button class="myButton" onclick="stopRecording()">停止</button>
+                    <button class="myButton" onclick="playRecordedAudio()">播放</button>
                     <audio id="recordedAudio" style="display: none;"></audio>
                 </div> 
             </div>
