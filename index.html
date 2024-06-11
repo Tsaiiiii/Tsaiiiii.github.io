@@ -86,9 +86,13 @@
             background: center / contain no-repeat url(""),
             #eee 35% url("https://i.pinimg.com/736x/ae/70/73/ae7073958cc76a0d5b637e42eb7af226.jpg");
             font-size: 50px; /* 设置字幕字体大小 */
+            bottom: -10px;
         }
         ::cue(.red) {
             color: yellow;
+        }
+        .recording {
+            background-color: red;
         }
     </style>
 </head>
@@ -135,8 +139,9 @@
 
                     <blockquote></blockquote>
 
-                    <button class="myButton" onclick="startRecording()">開始</button>
-                    <button class="myButton" onclick="stopRecording()">停止</button>
+                    <!-- <button class="myButton" onclick="startRecording()">開始</button>
+                    <button class="myButton" onclick="stopRecording()">停止</button> -->
+                    <button class="myButton" id="recordButton" onclick="toggleRecording()">開始</button>
                     <button class="myButton" onclick="playRecordedAudio()">播放</button>
                     <audio id="recordedAudio" style="display: none;"></audio>
                 </div> 
@@ -147,10 +152,24 @@
     <script src="videoFiles.js"></script>
     <script>
         let mediaRecorder;
+        let isRecording = false;
         let recordedChunks = [];
         let recordedAudioURL;
         let audio;
         let currentVideoKey = null;
+
+        function toggleRecording() {
+            if (!isRecording) {
+                startRecording();
+                document.getElementById('recordButton').classList.add('recording');
+                document.getElementById('recordButton').textContent = '停止';
+            } else {
+                stopRecording();
+                document.getElementById('recordButton').classList.remove('recording');
+                document.getElementById('recordButton').textContent = '開始';
+            }
+            isRecording = !isRecording;
+        }
 
         function showMainContent(contentId) {
             // 隐藏所有 mainContent
@@ -206,6 +225,7 @@
             // recordedAudioElement.play();
 
             const videoElement = document.getElementById('videoElement');
+            videoElement.controls = false;
             const audioContext = new (window.AudioContext || window.webkitAudioContext)();
             const videoSource = audioContext.createMediaElementSource(videoElement);
             const recordedSource = audioContext.createMediaElementSource(recordedAudioElement);
