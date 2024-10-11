@@ -67,7 +67,7 @@ const videoFiles = {
         "muteSegments": {
         "Anna": [
             {
-                "start": 1.72,
+                "start": 1,
                 "end": 14.395
             },
             {

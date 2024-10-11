@@ -204,7 +204,7 @@
 
             const recordedAudioElement = document.getElementById('recordedAudio');
             recordedAudioElement.src = recordedAudioURL;
-            recordedAudioElement.style.display = 'block'; // 顯示錄音播放元件
+            recordedAudioElement.style.display = 'none'; // 顯示錄音播放元件
             recordedAudioElement.controls = true;
             // recordedAudioElement.play();
 
@@ -219,13 +219,28 @@
             recordedSource.connect(merger, 0, 1);
             merger.connect(audioContext.destination);
 
+            // 添加釋放資源的邏輯
+            const cleanup = () => {
+                recordedAudioElement.pause(); // 停止播放
+                videoElement.pause();         // 停止播放
+                if (audioContext && audioContext.state != 'closed') {
+                    audioContext.close();     // 關閉 AudioContext，釋放資源
+                }
+            };
+
+            // 監聽音頻播放結束事件
+            recordedAudioElement.addEventListener('ended', cleanup);
+
             recordedAudioElement.addEventListener('play', () => {
                 videoElement.currentTime = recordedAudioElement.currentTime;
                 videoElement.play();
             });
 
             recordedAudioElement.addEventListener('pause', () => {
-                videoElement.pause();
+                if (recordedAudioElement.currentTime == recordedAudioElement.duration) {
+                    cleanup(); // 如果播放到最後，也釋放資源
+                }
+                // videoElement.pause();
             });
 
             recordedAudioElement.addEventListener('timeupdate', () => {
