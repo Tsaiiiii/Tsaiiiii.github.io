@@ -269,14 +269,100 @@
                 return;
             }
 
-            const a = document.createElement('a'); // 創建一個<a>元素
-            a.style.display = 'none'; // 隱藏元素
-            a.href = recordedAudioURL; // 設置錄製音頻的 URL 為下載地址
-            a.download = 'my_recording.webm'; // 設置下載文件的名稱
-            document.body.appendChild(a); // 將元素添加到頁面中
-            a.click(); // 觸發點擊事件
-            document.body.removeChild(a); // 下載後移除元素
+            const a = document.createElement('a'); // Create an <a> element
+            a.style.display = 'none'; // Hide the element
+
+            const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+            const reader = new FileReader();
+            reader.readAsArrayBuffer(blob);
+            
+            reader.onloadend = async function() {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const audioBuffer = await audioContext.decodeAudioData(reader.result);
+
+                const wavBuffer = audioBufferToWav(audioBuffer);
+                const wavBlob = new Blob([new DataView(wavBuffer)], { type: 'audio/wav' });
+                
+                const currentTimestamp = new Date().toISOString().replace(/[:.]/g, '-');
+                a.href = URL.createObjectURL(wavBlob); // Create a URL for the WAV file
+                a.download = `my_recording_${currentTimestamp}.wav`; // Use the timestamp as the filename
+                document.body.appendChild(a); // Append the element to the page
+                a.click(); // Trigger the download
+                document.body.removeChild(a); // Remove the element after the download
+            };
         }
+
+        // Convert AudioBuffer to WAV format
+        function audioBufferToWav(buffer) {
+            const numberOfChannels = buffer.numberOfChannels;
+            const sampleRate = buffer.sampleRate;
+            const length = buffer.length * numberOfChannels * 2 + 44;
+            const wavBuffer = new ArrayBuffer(length);
+            const view = new DataView(wavBuffer);
+            const channels = [];
+
+            let offset = 0;
+
+            function writeString(view, offset, string) {
+                for (let i = 0; i < string.length; i++) {
+                    view.setUint8(offset + i, string.charCodeAt(i));
+                }
+            }
+
+            function writeInt16(view, offset, value) {
+                view.setInt16(offset, value, true);
+            }
+
+            // RIFF chunk descriptor
+            writeString(view, offset, 'RIFF');
+            offset += 4;
+            view.setUint32(offset, 36 + buffer.length * numberOfChannels * 2, true); // file length
+            offset += 4;
+            writeString(view, offset, 'WAVE');
+            offset += 4;
+
+            // FMT sub-chunk
+            writeString(view, offset, 'fmt ');
+            offset += 4;
+            view.setUint32(offset, 16, true); // chunk size
+            offset += 4;
+            view.setUint16(offset, 1, true); // PCM format
+            offset += 2;
+            view.setUint16(offset, numberOfChannels, true); // number of channels
+            offset += 2;
+            view.setUint32(offset, sampleRate, true); // sample rate
+            offset += 4;
+            view.setUint32(offset, sampleRate * 2 * numberOfChannels, true); // byte rate
+            offset += 4;
+            view.setUint16(offset, numberOfChannels * 2, true); // block align
+            offset += 2;
+            view.setUint16(offset, 16, true); // bits per sample
+            offset += 2;
+
+            // Data sub-chunk
+            writeString(view, offset, 'data');
+            offset += 4;
+            view.setUint32(offset, buffer.length * numberOfChannels * 2, true);
+            offset += 4;
+
+            // Write interleaved PCM samples
+            for (let i = 0; i < buffer.numberOfChannels; i++) {
+                channels.push(buffer.getChannelData(i));
+            }
+
+            for (let i = 0; i < buffer.length; i++) {
+                for (let channel = 0; channel < numberOfChannels; channel++) {
+                    let sample = channels[channel][i] * 32767;
+                    if (sample < -32768) sample = -32768;
+                    if (sample > 32767) sample = 32767;
+                    writeInt16(view, offset, sample);
+                    offset += 2;
+                }
+            }
+
+            return wavBuffer;
+        }
+
 
         function loadVideoList() {
             const videoListElement = document.getElementById('videoList');
