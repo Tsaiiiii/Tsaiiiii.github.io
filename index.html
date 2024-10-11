@@ -88,8 +88,8 @@
     <div class="container2">
         <div id="topnav">
             <div class="container1">
-                <button class="myButton" onclick="showMainContent('mainContent1')">練習</button>
-                <button class="myButton" onclick="showMainContent('mainContent2')">配音</button>
+                <button class="myButton" onclick="showMainContent('mainContent1')">Practice</button>
+                <button class="myButton" onclick="showMainContent('mainContent2')">Record</button>
             </div>
         </div>
 
@@ -125,6 +125,7 @@
                     <button class="myButton" id="recordButton" onclick="toggleRecording()">Record</button>
                     <button class="myButton" onclick="playRecordedAudio()">Play</button>
                     <button class="myButton" onclick="resetRecording()">Reset</button>
+                    <button class="myButton" onclick="downloadRecording()">Submit</button>
                     <audio id="recordedAudio" style="display: none;"></audio>
                 </div> 
             </div>
@@ -260,6 +261,21 @@
                 audio.pause();
                 audio.currentTime = 0;  // 將音頻設置為開頭
             }
+        }
+
+        function downloadRecording() {
+            if (!recordedAudioURL) {
+                alert('尚未錄製音檔!');
+                return;
+            }
+
+            const a = document.createElement('a'); // 創建一個<a>元素
+            a.style.display = 'none'; // 隱藏元素
+            a.href = recordedAudioURL; // 設置錄製音頻的 URL 為下載地址
+            a.download = 'my_recording.webm'; // 設置下載文件的名稱
+            document.body.appendChild(a); // 將元素添加到頁面中
+            a.click(); // 觸發點擊事件
+            document.body.removeChild(a); // 下載後移除元素
         }
 
         function loadVideoList() {
