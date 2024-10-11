@@ -199,13 +199,10 @@
         }
 
         async function playRecordedAudio() {
-            await stopRecording(); // 等待錄音停止並處理數據
-
             const recordedAudioElement = document.getElementById('recordedAudio');
-            recordedAudioElement.src = recordedAudioURL;
+            recordedAudioElement.src = recordedAudioURL; // 使用之前錄製的音頻 URL
             recordedAudioElement.style.display = 'block'; // 顯示錄音播放元件
             recordedAudioElement.controls = true;
-            // recordedAudioElement.play();
 
             const videoElement = document.getElementById('videoElement');
             videoElement.controls = false;
@@ -231,8 +228,9 @@
                 videoElement.currentTime = recordedAudioElement.currentTime;
             });
 
-            recordedAudioElement.play();
+            recordedAudioElement.play(); // 播放錄音
         }
+
 
         function resetRecording() {
             // 停止正在錄製的音頻
@@ -394,7 +392,6 @@
             const muteCharacterSelect = document.getElementById('muteCharacter');
             const practiceVideoElement = document.getElementById('practiceVideo');
             const selectedCharacter = muteCharacterSelect.value;
-            const prompt = document.getElementById('prompt');
 
             muteCharacterSelect.innerHTML = '';
 
@@ -475,14 +472,6 @@
                     }
                     audio.muted = isMuted;
 
-                    if (isMuted) {
-                        prompt.style.display = 'block';
-                    } else {
-                        prompt.style.display = 'none';
-                    }
-                } else {
-                    audio.muted = false;
-                    prompt.style.display = 'none';
                 }
             });
 
