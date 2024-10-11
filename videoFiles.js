@@ -68,7 +68,7 @@ const videoFiles = {
         "Anna": [
             {
                 "start": 1.72,
-                "end": 11.73
+                "end": 14.395
             },
             {
                 "start": 19.126,
@@ -87,13 +87,25 @@ const videoFiles = {
                 "end": 46.976
             },
             {
+                "start": 52.584,
+                "end": 57.138
+            },
+            {
                 "start": 60.496,
                 "end": 62.58
+            },
+            {
+                "start": 65.815,
+                "end": 71.52
+            },
+            {
+                "start": 72.445,
+                "end": 78.303
             }
         ],
         "Ashley": [
             {
-                "start": 13.27,
+                "start": 14.395,
                 "end": 19.022
             },
             {
@@ -110,10 +122,22 @@ const videoFiles = {
             },
             {
                 "start": 47.048,
+                "end": 52.137
+            },
+            {
+                "start": 57.138,
                 "end": 60.352
             },
             {
                 "start": 63.04,
+                "end": 65.815
+            },
+            {
+                "start": 71.52,
+                "end": 72
+            },
+            {
+                "start": 78.303,
                 "end": 78.92
             }
         ]
