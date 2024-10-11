@@ -60,6 +60,64 @@ const videoFiles = {
     "Lesson 10: Come Over to My Place": {
         "src": "mp4/video10.mp4",
         "audioSrc": "wav/10_wav.wav",
+        "subtitlesSrc": {
+            "Anna": "subtitles/10_A.vtt",
+            "Ashley": "subtitles/10_B.vtt",
+        },
+        "muteSegments": {
+        "Anna": [
+            {
+                "start": 1.72,
+                "end": 11.73
+            },
+            {
+                "start": 19.126,
+                "end": 22.93
+            },
+            {
+                "start": 25.87,
+                "end": 33.42
+            },
+            {
+                "start": 40.44,
+                "end": 43.896
+            },
+            {
+                "start": 46.008,
+                "end": 46.976
+            },
+            {
+                "start": 60.496,
+                "end": 62.58
+            }
+        ],
+        "Ashley": [
+            {
+                "start": 13.27,
+                "end": 19.022
+            },
+            {
+                "start": 23.23,
+                "end": 25.74
+            },
+            {
+                "start": 33.84,
+                "end": 39.58
+            },
+            {
+                "start": 44.048,
+                "end": 45.816
+            },
+            {
+                "start": 47.048,
+                "end": 60.352
+            },
+            {
+                "start": 63.04,
+                "end": 78.92
+            }
+        ]
+    }
     },
     "Lesson 11: This Is My Neighborhood": {
         "src": "mp4/video11.mp4",

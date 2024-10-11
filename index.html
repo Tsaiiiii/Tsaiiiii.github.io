@@ -199,10 +199,13 @@
         }
 
         async function playRecordedAudio() {
+            await stopRecording(); // 等待錄音停止並處理數據
+
             const recordedAudioElement = document.getElementById('recordedAudio');
-            recordedAudioElement.src = recordedAudioURL; // 使用之前錄製的音頻 URL
+            recordedAudioElement.src = recordedAudioURL;
             recordedAudioElement.style.display = 'block'; // 顯示錄音播放元件
             recordedAudioElement.controls = true;
+            // recordedAudioElement.play();
 
             const videoElement = document.getElementById('videoElement');
             videoElement.controls = false;
@@ -228,9 +231,8 @@
                 videoElement.currentTime = recordedAudioElement.currentTime;
             });
 
-            recordedAudioElement.play(); // 播放錄音
+            recordedAudioElement.play();
         }
-
 
         function resetRecording() {
             // 停止正在錄製的音頻
