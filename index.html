@@ -172,15 +172,19 @@
         let audioContext;
 
         async function startRecording() {
-            // 清除之前的錄音數據
             recordedChunks = [];
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             mediaRecorder = new MediaRecorder(stream);
             mediaRecorder.ondataavailable = handleDataAvailable;
             mediaRecorder.start();
+
             const videoElement = document.getElementById('videoElement');
-            videoElement.play(); 
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();       
+            videoElement.play();
+
+            // Only create a new AudioContext if one does not already exist
+            if (!audioContext || audioContext.state === 'closed') {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();       
+            }       
         }
 
         function handleDataAvailable(event) {
@@ -190,13 +194,19 @@
         }
 
         async function stopRecording() {
-            mediaRecorder.stop();
+            if (mediaRecorder) {
+                mediaRecorder.stop();
+            }
             const blob = new Blob(recordedChunks, { type: 'audio/webm' });
             recordedAudioURL = URL.createObjectURL(blob);
-            // recordedChunks = [];
+            
             const videoElement = document.getElementById('videoElement');
             videoElement.pause();
-            audioContext.close();
+
+            // Ensure audioContext is not closed before closing
+            if (audioContext && audioContext.state !== 'closed') {
+                await audioContext.close();
+            }
         }
 
         async function playRecordedAudio() {
