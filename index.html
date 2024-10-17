@@ -193,7 +193,7 @@
             mediaRecorder.stop();
             const blob = new Blob(recordedChunks, { type: 'audio/webm' });
             recordedAudioURL = URL.createObjectURL(blob);
-            recordedChunks = [];
+            // recordedChunks = [];
             const videoElement = document.getElementById('videoElement');
             videoElement.pause();
             audioContext.close();
@@ -204,7 +204,7 @@
 
             const recordedAudioElement = document.getElementById('recordedAudio');
             recordedAudioElement.src = recordedAudioURL;
-            recordedAudioElement.style.display = 'none'; // 顯示錄音播放元件
+            recordedAudioElement.style.display = 'block'; // 顯示錄音播放元件
             recordedAudioElement.controls = true;
             // recordedAudioElement.play();
 
