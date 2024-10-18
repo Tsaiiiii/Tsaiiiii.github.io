@@ -15,14 +15,11 @@
             padding: 10px; /* 设置内边距 */
             text-align: center; /* 文字居中 */
         }
-        /*.container3 {
-            display: flex; /* 使用 Flexbox 布局 */
-            /*flex: 1; /* 让 container 占据剩余的所有空间 */
-/*        }*/
         .container1 {
             display: flex;
+            flex-direction: row; 
             /*justify-content: space-between; /* 让内容水平均匀分布 */
-            width: 110%; /* 设置容器宽度 */
+            /*width: 110%; /* 设置容器宽度 */
             margin-bottom: 20px; /* 设置容器之间的间距 */
         }
         .container2 {
@@ -30,6 +27,36 @@
             flex-direction: column; /* 让内容垂直排列 */
             align-items: left; /* 让内容水平居中 */
             width: 80%; /* 设置容器宽度 */
+        }
+        .container3 {
+            display: flex;
+            flex-direction: column; /* 让内容垂直排列 */
+            align-items: center; /* 让内容水平居中 */
+            width: 80%; /* 设置容器宽度 */
+        }
+        .container4 {
+            display: flex;
+            flex-direction: row; 
+            /*justify-content: space-between; /* 让内容水平均匀分布 */
+            /*width: 110%; /* 设置容器宽度 */
+            margin-left: 50px; /* 设置容器之间的间距 */
+            column-gap: 50px;
+        }
+        .container5 {
+            display: flex;
+            flex-direction: row; 
+            /*justify-content: space-between; /* 让内容水平均匀分布 */
+            /*width: 110%; /* 设置容器宽度 */
+            margin-bottom: 20px; /* 设置容器之间的间距 */
+            column-gap: 50px;
+        }
+        .container6 {
+            display: flex;
+            flex-direction: row; 
+            /*justify-content: space-between; /* 让内容水平均匀分布 */
+            /*width: 110%; /* 设置容器宽度 */
+            /*margin-bottom: 20px; /* 设置容器之间的间距 */
+            background-color: #ACD6FF;
         }
         #sidebar {
             width: 200px;
@@ -87,49 +114,70 @@
 </head>
 <body>
     <div class="container2">
-        <div id="topnav">
-            <div class="container1">
-                <button class="myButton" onclick="showMainContent('mainContent1')">Practice</button>
-                <button class="myButton" onclick="showMainContent('mainContent2')">Record</button>
-            </div>
+        <div class="container6" style="height:60px;" >
+            <h2>使用者名稱：</h2>
+            <input type = "username" style="height:50px;">
+            <!-- <div class="container1">
+                <button class="myButton" onclick="showMainContent('mainContent1')">練習模式</button>
+                <button class="myButton" onclick="showMainContent('mainContent2')">配音模式</button>
+            </div> -->
         </div>
 
-        <div class="container1">
+        <div class="container5">
 
             <div id="sidebar">
-                <h2>Video List</h2>
+                <h2>影片列表</h2>
                 <ul id="videoList">
                 </ul>
             </div>
 
-            <div id="mainContent1" class="mainContent">
+            <!-- <div id="mainContent1" class="mainContent">
                 <video controls width="900" id="practiceVideo">
                     Your browser does not support the video tag.
                 </video>
+            </div> -->
+
+            <!-- <div id="mainContent2" class="mainContent"> -->
+            <div class = "container3">
+                <div class = "container4">
+                    <button class="myButton" onclick="showMainContent('mainContent1')" style="height: 60px;">練習模式</button>
+                    <button class="myButton" onclick="showMainContent('mainContent2')" style="height: 60px;">配音模式</button>
+                </div>
+    
+                <div id="mainContent1" class="mainContent">
+                    <video controls width="900" id="practiceVideo">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+    
+                <div id="mainContent2" class="mainContent">
+                    <button class="button" onclick="resetRecording()" style="float:right;"><img src="refresh.png" style="width: 30px;height:30px;"></button>
+    
+                    <video controls width="900" id="videoElement">
+                        <track kind="subtitles" label="English" srclang="en" default>
+                        Your browser does not support the video tag.
+                    </video>
+                    <br><br>
+                    <div class="container1">
+    
+                        <h2>角色：</h2>
+                        <select id="muteCharacter" onchange="muteCharacterChange()">
+                        </select>
+    
+                        <blockquote></blockquote>
+    
+                        <button class="myButton" id="recordButton" onclick="toggleRecording()">錄音</button>
+                        <button class="myButton" onclick="playRecordedAudio()">播放</button>
+                        <button class="myButton" onclick="downloadRecording()">保存</button>
+                        <audio id="recordedAudio" style="display: none;"></audio>
+                    </div> 
+    
+    
+                    
+                </div>
             </div>
 
-            <div id="mainContent2" class="mainContent">
-
-                <video controls width="900" id="videoElement">
-                    <track kind="subtitles" label="English" srclang="en" default>
-                    Your browser does not support the video tag.
-                </video>
-                <br><br>
-                <div class="container1">
-
-                    <h2>Character</h2>
-                    <select id="muteCharacter" onchange="muteCharacterChange()">
-                    </select>
-
-                    <blockquote></blockquote>
-
-                    <button class="myButton" id="recordButton" onclick="toggleRecording()">Record</button>
-                    <button class="myButton" onclick="playRecordedAudio()">Play</button>
-                    <button class="myButton" onclick="resetRecording()">Reset</button>
-                    <button class="myButton" onclick="downloadRecording()">Submit</button>
-                    <audio id="recordedAudio" style="display: none;"></audio>
-                </div> 
-            </div>
+            
         </div> 
     </div>
 
@@ -141,16 +189,47 @@
         let recordedAudioURL;
         let audio;
         let currentVideoKey = null;
+        let audioContext;
+
+        // 捕捉 console.log 輸出
+        let logData = [];
+        const originalLog = console.log;
+
+        console.log = function(...args) {
+            logData.push(args.join(' '));
+            originalLog.apply(console, args);
+        };
+
+        // 監聽 beforeunload 事件
+        window.addEventListener('beforeunload', function(event) {
+            // 將 logData 轉換為一個 Blob
+            const blob = new Blob([logData.join('\n')], { type: 'text/plain' });
+
+            // 創建一個隱藏的鏈接來觸發檔案下載
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'console_log.txt';
+            
+            // 自動點擊鏈接以觸發下載
+            document.body.appendChild(link); // 將鏈接加到文件中
+            link.click();
+            document.body.removeChild(link); // 完成後刪除鏈接
+
+            // 顯示提示訊息，讓用戶知道正在關閉
+            event.preventDefault();
+            event.returnValue = ''; // 顯示預設的提示訊息
+        });
+
 
         function toggleRecording() {
             if (!isRecording) {
                 startRecording();
                 document.getElementById('recordButton').classList.add('recording');
-                document.getElementById('recordButton').textContent = 'Stop';
+                document.getElementById('recordButton').textContent = '暫停';
             } else {
                 stopRecording();
                 document.getElementById('recordButton').classList.remove('recording');
-                document.getElementById('recordButton').textContent = 'Record';
+                document.getElementById('recordButton').textContent = '配音';
             }
             isRecording = !isRecording;
         }
@@ -168,8 +247,6 @@
                 targetContent.style.display = 'block';
             }
         }
-
-        let audioContext;
 
         async function startRecording() {
             recordedChunks = [];
@@ -209,33 +286,82 @@
             }
         }
 
+        let videoSource;
+        let recordedSource;
+        let isVsConnected = false;
+        let isRsConnected = false;
+        let merger;
+        let isMerConnected = false;
+
         async function playRecordedAudio() {
-            await stopRecording(); // 等待錄音停止並處理數據
+            if(!isRsConnected)
+            {
+                await stopRecording(); // 等待錄音停止並處理數據
+            }
 
             const recordedAudioElement = document.getElementById('recordedAudio');
             recordedAudioElement.src = recordedAudioURL;
-            recordedAudioElement.style.display = 'block'; // 顯示錄音播放元件
+            recordedAudioElement.style.display = 'none'; // 顯示錄音播放元件
             recordedAudioElement.controls = true;
             // recordedAudioElement.play();
+            console.log('recordedAudioURL', recordedAudioURL)
 
             const videoElement = document.getElementById('videoElement');
             videoElement.controls = false;
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const videoSource = audioContext.createMediaElementSource(videoElement);
-            const recordedSource = audioContext.createMediaElementSource(recordedAudioElement);
-            const merger = audioContext.createChannelMerger(2); // 创建音频合并节点
+            if (!audioContext || audioContext.state == 'closed') {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            // const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            if(videoSource == undefined)
+            {
+                videoSource = audioContext.createMediaElementSource(videoElement);
+            }
 
-            videoSource.connect(merger, 0, 0);
-            recordedSource.connect(merger, 0, 1);
-            merger.connect(audioContext.destination);
+            if(recordedSource == undefined)
+            {
+                recordedSource = audioContext.createMediaElementSource(recordedAudioElement);
+            }
+            console.log('videoSource', videoSource);
+            console.log('recordedSource', recordedSource);
+            
+
+            // const videoSource = audioContext.createMediaElementSource(videoElement);
+            // // console.log('AudioContext', audioContext.state)
+            // const recordedSource = audioContext.createMediaElementSource(recordedAudioElement);
+            // const merger = audioContext.createChannelMerger(2); // 创建音频合并节点
+
+            if(merger == undefined)
+            {
+                merger = audioContext.createChannelMerger(2); // 创建音频合并节点
+            }
+
+            console.log('audioContext', audioContext.state)
+            if(isVsConnected == false)
+            {
+                videoSource.connect(merger, 0, 0);
+                isVsConnected = true;
+            }
+            if(isRsConnected == false)
+            {
+                recordedSource.connect(merger, 0, 1);
+                isRsConnected = true;
+            }
+            if(isMerConnected == false)
+            {
+                merger.connect(audioContext.destination);
+                isMerConnected = true;
+            }
 
             // 添加釋放資源的邏輯
             const cleanup = () => {
                 recordedAudioElement.pause(); // 停止播放
                 videoElement.pause();         // 停止播放
-                if (audioContext && audioContext.state != 'closed') {
-                    audioContext.close();     // 關閉 AudioContext，釋放資源
-                }
+                recordedAudioElement.currentTime = 0;
+                videoElement.currentTime = 0;
+                // if (audioContext && audioContext.state != 'closed') {
+                //     audioContext.close();     // 關閉 AudioContext，釋放資源
+                //     console.log('AudioContext', audioContext.state)
+                // }
             };
 
             // 監聽音頻播放結束事件
@@ -274,19 +400,43 @@
             recordedAudioElement.style.display = 'none';
 
             // 重置錄音按鈕狀態
-            document.getElementById('recordButton').textContent = 'Record';
+            document.getElementById('recordButton').textContent = '配音';
             document.getElementById('recordButton').classList.remove('recording');
             isRecording = false;
 
             // 停止播放視頻和音頻
             const videoElement = document.getElementById('videoElement');
-            videoElement.pause();
-            videoElement.currentTime = 0;  // 將視頻設置為開頭
+            // videoElement.pause();
+            // videoElement.currentTime = 0;  // 將視頻設置為開頭
+            recordedAudioElement.pause(); // 停止播放
+            videoElement.pause();         // 停止播放
+            recordedAudioElement.currentTime = 0;
+            videoElement.currentTime = 0;
 
-            if (audio) {
-                audio.pause();
-                audio.currentTime = 0;  // 將音頻設置為開頭
+            // if (audio) {
+            //     audio.pause();
+            //     audio.currentTime = 0;  // 將音頻設置為開頭
+            // }
+
+            console.log('audioContext', audioContext);
+            // merger.disconnect(audioContext.destination);
+            // videoSource.disconnect(merger);
+            // videoSource.disconnect();
+            recordedSource.disconnect(merger);
+            recordedSource.disconnect();
+            merger.disconnect();
+            // videoSource = undefined;
+            recordedSource = undefined;
+            merger = undefined;
+
+            // isVsConnected = false;
+            isRecording = false;
+            isMerConnected = false;
+
+            if (audioContext && audioContext.state !== 'closed') {
+                audioContext.close(); // Close the existing AudioContext
             }
+            console.log('audioContext', audioContext);
         }
 
         function downloadRecording() {
