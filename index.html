@@ -80,7 +80,7 @@
             padding: 20px;
             display: none; /* 隐藏所有主要内容 */
         }
-        #mainContent1, #mainContent2 {
+        #practice_mode, #record_mode {
             flex: 1; /* 让 mainContent 占据剩余的所有空间 */
             padding: 20px;
         }
@@ -116,7 +116,7 @@
     <div class="container2">
         <div class="container6" style="height:60px;" >
             <h2>使用者名稱：</h2>
-            <input type = "username" style="height:50px;">
+            <input type="text" id="username" style="height:50px;">
             <!-- <div class="container1">
                 <button class="myButton" onclick="showMainContent('mainContent1')">練習模式</button>
                 <button class="myButton" onclick="showMainContent('mainContent2')">配音模式</button>
@@ -140,19 +140,20 @@
             <!-- <div id="mainContent2" class="mainContent"> -->
             <div class = "container3">
                 <div class = "container4">
-                    <button class="myButton" onclick="showMainContent('mainContent1')" style="height: 60px;">練習模式</button>
-                    <button class="myButton" onclick="showMainContent('mainContent2')" style="height: 60px;">配音模式</button>
+                    <button class="myButton" onclick="showMainContent('practice_mode')" style="height: 60px;">練習模式</button>
+                    <button class="myButton" onclick="showMainContent('record_mode')" style="height: 60px;">配音模式</button>
                 </div>
     
-                <div id="mainContent1" class="mainContent">
+                <div id="practice_mode" class="mainContent">
                     <video controls width="900" id="practiceVideo">
                         Your browser does not support the video tag.
                     </video>
                 </div>
     
-                <div id="mainContent2" class="mainContent">
+                <div id="record_mode" class="mainContent">
+                    <button id="downloadLogBtn" style="float:right;"><img src="files.png" style="width: 30px;height:30px;"></button>
                     <button class="button" onclick="resetRecording()" style="float:right;"><img src="refresh.png" style="width: 30px;height:30px;"></button>
-    
+                    
                     <video controls width="900" id="videoElement">
                         <track kind="subtitles" label="English" srclang="en" default>
                         Your browser does not support the video tag.
@@ -200,6 +201,27 @@
             originalLog.apply(console, args);
         };
 
+        // 監聽按鈕點擊事件
+        document.getElementById('downloadLogBtn').addEventListener('click', function() {
+            // 將 logData 轉換為 Blob
+            const blob = new Blob([logData.join('\n')], { type: 'text/plain' });
+
+            // 創建一個隱藏的鏈接來觸發檔案下載
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            const username = document.getElementById('username').value;
+            const date = new Date().toISOString().split('T')[0];
+            const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
+            const currentTimestamp = date + ' ' + time;
+            console.log('Click download log file\nTimestamp:', currentTimestamp, "\n");
+            link.download = username + '_' + currentTimestamp + '_log.txt';
+
+            // 自動點擊鏈接以觸發下載
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+
         // 監聽 beforeunload 事件
         window.addEventListener('beforeunload', function(event) {
             // 將 logData 轉換為一個 Blob
@@ -208,7 +230,13 @@
             // 創建一個隱藏的鏈接來觸發檔案下載
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = 'console_log.txt';
+            const username = document.getElementById('username').value;
+            const date = new Date().toISOString().split('T')[0];
+            const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
+            const currentTimestamp = date + ' ' + time;
+            console.log('Close/reload tab\nTimestamp:', currentTimestamp, "\n");
+            // const currentTimestamp = new Date(year, month, day, hours, minutes, seconds);
+            link.download = username + '_' + currentTimestamp +'_log.txt';
             
             // 自動點擊鏈接以觸發下載
             document.body.appendChild(link); // 將鏈接加到文件中
@@ -222,14 +250,19 @@
 
 
         function toggleRecording() {
+            const date = new Date().toISOString().split('T')[0];
+            const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
+            const currentTimestamp = date + ' ' + time;
             if (!isRecording) {
                 startRecording();
                 document.getElementById('recordButton').classList.add('recording');
                 document.getElementById('recordButton').textContent = '暫停';
+                console.log("Click start recording\nTimestamp:", currentTimestamp, "\n");
             } else {
                 stopRecording();
                 document.getElementById('recordButton').classList.remove('recording');
                 document.getElementById('recordButton').textContent = '配音';
+                console.log("Click stop recording\nTimestamp:", currentTimestamp, "\n");
             }
             isRecording = !isRecording;
         }
@@ -240,6 +273,10 @@
             mainContents.forEach(content => {
                 content.style.display = 'none';
             });
+            const date = new Date().toISOString().split('T')[0];
+            const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
+            const currentTimestamp = date + ' ' + time;
+            console.log("Select", contentId, '\nTimestamp:', currentTimestamp, "\n");
 
             // 显示指定的 mainContent
             const targetContent = document.getElementById(contentId);
@@ -292,6 +329,7 @@
         let isRsConnected = false;
         let merger;
         let isMerConnected = false;
+        let saveCounter = 0;
 
         async function playRecordedAudio() {
             if(!isRsConnected)
@@ -299,12 +337,16 @@
                 await stopRecording(); // 等待錄音停止並處理數據
             }
 
+            const date = new Date().toISOString().split('T')[0];
+            const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
+            const currentTimestamp = date + ' ' + time;
+            console.log("Play recording\nTimestamp:", currentTimestamp, "\n");
+
             const recordedAudioElement = document.getElementById('recordedAudio');
             recordedAudioElement.src = recordedAudioURL;
             recordedAudioElement.style.display = 'none'; // 顯示錄音播放元件
             recordedAudioElement.controls = true;
             // recordedAudioElement.play();
-            console.log('recordedAudioURL', recordedAudioURL)
 
             const videoElement = document.getElementById('videoElement');
             videoElement.controls = false;
@@ -321,21 +363,12 @@
             {
                 recordedSource = audioContext.createMediaElementSource(recordedAudioElement);
             }
-            console.log('videoSource', videoSource);
-            console.log('recordedSource', recordedSource);
             
-
-            // const videoSource = audioContext.createMediaElementSource(videoElement);
-            // // console.log('AudioContext', audioContext.state)
-            // const recordedSource = audioContext.createMediaElementSource(recordedAudioElement);
-            // const merger = audioContext.createChannelMerger(2); // 创建音频合并节点
-
             if(merger == undefined)
             {
                 merger = audioContext.createChannelMerger(2); // 创建音频合并节点
             }
 
-            console.log('audioContext', audioContext.state)
             if(isVsConnected == false)
             {
                 videoSource.connect(merger, 0, 0);
@@ -358,10 +391,6 @@
                 videoElement.pause();         // 停止播放
                 recordedAudioElement.currentTime = 0;
                 videoElement.currentTime = 0;
-                // if (audioContext && audioContext.state != 'closed') {
-                //     audioContext.close();     // 關閉 AudioContext，釋放資源
-                //     console.log('AudioContext', audioContext.state)
-                // }
             };
 
             // 監聽音頻播放結束事件
@@ -391,6 +420,11 @@
             if (mediaRecorder && isRecording) {
                 stopRecording();
             }
+            
+            const date = new Date().toISOString().split('T')[0];
+            const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
+            const currentTimestamp = date + ' ' + time;
+            console.log("Click reset\nTimestamp:", currentTimestamp);
 
             // 清空錄音資料
             recordedChunks = [];
@@ -418,7 +452,6 @@
             //     audio.currentTime = 0;  // 將音頻設置為開頭
             // }
 
-            console.log('audioContext', audioContext);
             // merger.disconnect(audioContext.destination);
             // videoSource.disconnect(merger);
             // videoSource.disconnect();
@@ -436,7 +469,6 @@
             if (audioContext && audioContext.state !== 'closed') {
                 audioContext.close(); // Close the existing AudioContext
             }
-            console.log('audioContext', audioContext);
         }
 
         function downloadRecording() {
@@ -459,9 +491,15 @@
                 const wavBuffer = audioBufferToWav(audioBuffer);
                 const wavBlob = new Blob([new DataView(wavBuffer)], { type: 'audio/wav' });
                 
-                const currentTimestamp = new Date().toISOString().replace(/[:.]/g, '-');
+                const date = new Date().toISOString().split('T')[0];
+                const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
+                const currentTimestamp = date + ' ' + time;
+                const username = document.getElementById('username').value;
+                console.log("Click download:\nTimestamp:", currentTimestamp, "\n");
+                console.log("Save counter:", saveCounter);
+                saveCounter += 1;
                 a.href = URL.createObjectURL(wavBlob); // Create a URL for the WAV file
-                a.download = `my_recording_${currentTimestamp}.wav`; // Use the timestamp as the filename
+                a.download = `${username}_${currentTimestamp}.wav`; // Use the timestamp as the filename
                 document.body.appendChild(a); // Append the element to the page
                 a.click(); // Trigger the download
                 document.body.removeChild(a); // Remove the element after the download
@@ -552,6 +590,10 @@
                     });
                     listItem.classList.add('selected');
                     selectVideo(key);
+                    const date = new Date().toISOString().split('T')[0];
+                    const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
+                    const currentTimestamp = date + ' ' + time;
+                    console.log('Select Video "', key, '"\nTimestamp:',currentTimestamp, "\n");
                 };
                 videoListElement.appendChild(listItem);
             });
@@ -664,6 +706,12 @@
             if (currentVideoKey) {
                 selectVideo(currentVideoKey);
             }
+            const muteCharacterSelect = document.getElementById('muteCharacter');
+            const character = muteCharacterSelect.value;
+            const date = new Date().toISOString().split('T')[0];
+            const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
+            const currentTimestamp = date + ' ' + time;
+            console.log("Select character:", character, "\nTimestamp:", currentTimestamp, "\n");
         }
 
         document.addEventListener('DOMContentLoaded', function() {
