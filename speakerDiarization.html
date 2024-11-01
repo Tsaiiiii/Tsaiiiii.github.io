@@ -67,7 +67,7 @@
 
         function displaySpeakers(utterances, videoFile) {
             const speakersContainer = document.getElementById('speakersContainer');
-            speakersContainer.innerHTML = '';
+            speakersContainer.innerHTML = ''; // 清空內容，避免重複渲染
 
             const videoUrl = URL.createObjectURL(videoFile);
             const videoPlayer = document.getElementById('videoPlayer');
@@ -78,16 +78,21 @@
                     createUtteranceElement(utterance, speakersContainer, videoPlayer, index);
                 });
 
-                // 在 speakersContainer 最後添加一個按鈕來新增 utterance
-                const addUtteranceButton = document.createElement('div');
-                addUtteranceButton.className = 'add-button';
-                addUtteranceButton.textContent = '+ 新增 Utterance';
-                addUtteranceButton.addEventListener('click', () => addUtteranceAtEnd(speakersContainer, videoPlayer));
-                speakersContainer.appendChild(addUtteranceButton);
+                // 檢查是否已經存在新增 Utterance 按鈕，避免重複添加
+                const existingAddButton = document.querySelector('.add-button');
+                if (!existingAddButton) {
+                    // 在 speakersContainer 最後添加一個按鈕來新增 utterance
+                    const addUtteranceButton = document.createElement('div');
+                    addUtteranceButton.className = 'add-button';
+                    addUtteranceButton.textContent = '+ 新增 Utterance';
+                    addUtteranceButton.addEventListener('click', () => addUtteranceAtEnd(speakersContainer, videoPlayer));
+                    speakersContainer.appendChild(addUtteranceButton);
+                }
 
                 document.getElementById('downloadButton').style.display = 'block';
             });
         }
+
 
         function createUtteranceElement(utterance, speakersContainer, videoPlayer, index) {
             const utteranceDiv = document.createElement('div');
