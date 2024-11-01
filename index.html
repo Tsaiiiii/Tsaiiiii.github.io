@@ -170,6 +170,13 @@
                         <button class="myButton" id="recordButton" onclick="toggleRecording()">錄音</button>
                         <button class="myButton" onclick="playRecordedAudio()">播放</button>
                         <button class="myButton" onclick="downloadRecording()">保存</button>
+                        <blockquote></blockquote>
+                        <div id="saveIndicators" style="display: flex; gap: 10px;">
+                            <div class="indicator" style="width: 60px; height: 60px; border-radius: 50%; background-color: gray;"></div>
+                            <div class="indicator" style="width: 60px; height: 60px; border-radius: 50%; background-color: gray;"></div>
+                            <div class="indicator" style="width: 60px; height: 60px; border-radius: 50%; background-color: gray;"></div>
+                        </div>
+                        <p id="saveCountDisplay" style="display: none;">保存次數: 0</p>
                         <audio id="recordedAudio" style="display: none;"></audio>
                     </div> 
     
@@ -214,7 +221,7 @@
             const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
             const currentTimestamp = date + ' ' + time;
             console.log('Click download log file\nTimestamp:', currentTimestamp, "\n");
-            link.download = username + '_' + currentTimestamp + '_log.txt';
+            link.download = username + '_' + currentTimestamp + '.log';
 
             // 自動點擊鏈接以觸發下載
             document.body.appendChild(link);
@@ -236,7 +243,7 @@
             const currentTimestamp = date + ' ' + time;
             console.log('Close/reload tab\nTimestamp:', currentTimestamp, "\n");
             // const currentTimestamp = new Date(year, month, day, hours, minutes, seconds);
-            link.download = username + '_' + currentTimestamp +'_log.txt';
+            link.download = username + '_' + currentTimestamp +'.log';
             
             // 自動點擊鏈接以觸發下載
             document.body.appendChild(link); // 將鏈接加到文件中
@@ -471,6 +478,21 @@
             }
         }
 
+        function updateSaveIndicators() {
+            const indicators = document.querySelectorAll('#saveIndicators .indicator');
+            const saveCountDisplay = document.getElementById('saveCountDisplay');
+            saveCountDisplay.textContent = `保存次數: ${saveCounter}`;
+
+            // 重置所有指示器為灰色
+            indicators.forEach((indicator, index) => {
+                if (index < saveCounter) {
+                    indicator.style.backgroundColor = 'green'; // 變成綠色
+                } else {
+                    indicator.style.backgroundColor = 'gray'; // 保持灰色
+                }
+            });
+        }
+
         function downloadRecording() {
             if (!recordedAudioURL) {
                 alert('尚未錄製音檔!');
@@ -495,9 +517,11 @@
                 const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
                 const currentTimestamp = date + ' ' + time;
                 const username = document.getElementById('username').value;
-                console.log("Click download:\nTimestamp:", currentTimestamp, "\n");
-                console.log("Save counter:", saveCounter);
-                saveCounter += 1;
+                console.log("Click download\nTimestamp:", currentTimestamp, "\n");
+                if (saveCounter < 3) { // 每次保存不超過三次
+                    saveCounter += 1;
+                    updateSaveIndicators(); // 更新指示器
+                }
                 a.href = URL.createObjectURL(wavBlob); // Create a URL for the WAV file
                 a.download = `${username}_${currentTimestamp}.wav`; // Use the timestamp as the filename
                 document.body.appendChild(a); // Append the element to the page
