@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>語者分段調整器</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .speaker {
+            margin: 20px 0;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            position: relative;
+        }
+        .slider {
+            margin-top: 10px;
+            width: 100%;
+        }
+        .move-button {
+            cursor: pointer;
+            color: blue;
+            font-weight: bold;
+            margin: 0 5px;
+        }
+        .add-button {
+            display: block;
+            margin: 20px auto;
+            cursor: pointer;
+            color: blue;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>語者分段調整器</h1>
+    <input type="file" id="jsonFile" accept=".json">
+    <input type="file" id="videoFile" accept="video/*">
+    <button id="loadButton">載入</button>
+    <video id="videoPlayer" controls style="width: 100%; margin-top: 20px;"></video>
+    <div id="speakersContainer"></div>
+
+    <button id="downloadButton" style="display: none;">下載更新的JSON</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js"></script>
+    <script>
+        let utterancesData = {};
+        
+        document.getElementById('loadButton').addEventListener('click', async () => {
+            const jsonFile = document.getElementById('jsonFile').files[0];
+            const videoFile = document.getElementById('videoFile').files[0];
+
+            if (!jsonFile || !videoFile) {
+                alert("請上傳 JSON 檔案和影片檔。");
+                return;
+            }
+
+            const jsonText = await jsonFile.text();
+            utterancesData = JSON.parse(jsonText);
+            displaySpeakers(utterancesData.utterances, videoFile);
+        });
+
+        function displaySpeakers(utterances, videoFile) {
+            const speakersContainer = document.getElementById('speakersContainer');
+            speakersContainer.innerHTML = '';
+
+            const videoUrl = URL.createObjectURL(videoFile);
+            const videoPlayer = document.getElementById('videoPlayer');
+            videoPlayer.src = videoUrl;
+
+            videoPlayer.addEventListener('loadedmetadata', () => {
+                utterances.forEach((utterance, index) => {
+                    createUtteranceElement(utterance, speakersContainer, videoPlayer, index);
+                });
+
+                // 在 speakersContainer 最後添加一個按鈕來新增 utterance
+                const addUtteranceButton = document.createElement('div');
+                addUtteranceButton.className = 'add-button';
+                addUtteranceButton.textContent = '+ 新增 Utterance';
+                addUtteranceButton.addEventListener('click', () => addUtteranceAtEnd(speakersContainer, videoPlayer));
+                speakersContainer.appendChild(addUtteranceButton);
+
+                document.getElementById('downloadButton').style.display = 'block';
+            });
+        }
+
+        function createUtteranceElement(utterance, speakersContainer, videoPlayer, index) {
+            const utteranceDiv = document.createElement('div');
+            utteranceDiv.classList.add('speaker');
+            utteranceDiv.innerHTML = `<span>${utterance.speaker}: ${utterance.text}</span>`;
+
+            // 上移和下移按鈕
+            const moveUpButton = document.createElement('span');
+            moveUpButton.className = 'move-button';
+            moveUpButton.textContent = '↑';
+            moveUpButton.title = '上移';
+            moveUpButton.addEventListener('click', () => moveUtterance(index, -1));
+
+            const moveDownButton = document.createElement('span');
+            moveDownButton.className = 'move-button';
+            moveDownButton.textContent = '↓';
+            moveDownButton.title = '下移';
+            moveDownButton.addEventListener('click', () => moveUtterance(index, 1));
+
+            utteranceDiv.appendChild(moveUpButton);
+            utteranceDiv.appendChild(moveDownButton);
+
+            const sliderDiv = document.createElement('div');
+            sliderDiv.classList.add('slider');
+            utteranceDiv.appendChild(sliderDiv);
+
+            const speakerSelect = document.createElement('select');
+            speakerSelect.className = 'speaker-select';
+            const speakers = [...new Set(utterancesData.utterances.map(u => u.speaker))];
+            speakers.forEach(speaker => {
+                const option = document.createElement('option');
+                option.value = speaker;
+                option.textContent = speaker;
+                speakerSelect.appendChild(option);
+            });
+            speakerSelect.value = utterance.speaker;
+            utteranceDiv.appendChild(speakerSelect);
+            
+            speakersContainer.appendChild(utteranceDiv);
+
+            const slider = noUiSlider.create(sliderDiv, {
+                start: [utterance.start, utterance.end],
+                connect: true,
+                range: {
+                    'min': 0,
+                    'max': videoPlayer.duration * 1000
+                },
+                step: 1
+            });
+
+            slider.on('update', function (values) {
+                utterance.start = Math.round(values[0]);
+                utterance.end = Math.round(values[1]);
+            });
+
+            speakerSelect.addEventListener('change', () => {
+                utterance.speaker = speakerSelect.value;
+            });
+
+            utteranceDiv.addEventListener('click', () => {
+                videoPlayer.currentTime = utterance.start / 1000;
+                videoPlayer.play();
+                const playUntilEnd = setInterval(() => {
+                    if (videoPlayer.currentTime >= utterance.end / 1000) {
+                        videoPlayer.pause();
+                        clearInterval(playUntilEnd);
+                    }
+                }, 100);
+            });
+        }
+
+        function moveUtterance(index, direction) {
+            if ((index + direction < 0) || (index + direction >= utterancesData.utterances.length)) return;
+
+            const temp = utterancesData.utterances[index];
+            utterancesData.utterances[index] = utterancesData.utterances[index + direction];
+            utterancesData.utterances[index + direction] = temp;
+
+            displaySpeakers(utterancesData.utterances, document.getElementById('videoFile').files[0]);
+        }
+
+        function addUtteranceAtEnd(speakersContainer, videoPlayer) {
+            const newSpeaker = prompt("請輸入 Speaker 名稱:");
+            const newTranscript = prompt("請輸入 Utterance 內容:");
+            
+            if (newSpeaker && newTranscript) {
+                const newUtterance = {
+                    speaker: newSpeaker,
+                    text: newTranscript,
+                    start: 0,
+                    end: 5000,
+                    words: []
+                };
+                
+                utterancesData.utterances.push(newUtterance);
+                displaySpeakers(utterancesData.utterances, document.getElementById('videoFile').files[0]);
+            } else {
+                alert("請填入有效的 Speaker 和 Utterance 內容。");
+            }
+        }
+
+        document.getElementById('downloadButton').addEventListener('click', () => {
+            const updatedJson = JSON.stringify(utterancesData, null, 2);
+            const blob = new Blob([updatedJson], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'updated_utterances.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+</html>
