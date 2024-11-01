@@ -67,50 +67,61 @@
 
         function displaySpeakers(utterances, videoFile) {
             const speakersContainer = document.getElementById('speakersContainer');
-            speakersContainer.innerHTML = ''; // 清空內容，避免重複渲染
-
-            const videoUrl = URL.createObjectURL(videoFile);
-            const videoPlayer = document.getElementById('videoPlayer');
-            videoPlayer.src = videoUrl;
-
-            videoPlayer.addEventListener('loadedmetadata', () => {
-                utterances.forEach((utterance, index) => {
-                    createUtteranceElement(utterance, speakersContainer, videoPlayer, index);
-                });
-
-                // 檢查是否已經存在新增 Utterance 按鈕，避免重複添加
-                const existingAddButton = document.querySelector('.add-button');
-                if (!existingAddButton) {
-                    // 在 speakersContainer 最後添加一個按鈕來新增 utterance
-                    const addUtteranceButton = document.createElement('div');
-                    addUtteranceButton.className = 'add-button';
-                    addUtteranceButton.textContent = '+ 新增 Utterance';
-                    addUtteranceButton.addEventListener('click', () => addUtteranceAtEnd(speakersContainer, videoPlayer));
-                    speakersContainer.appendChild(addUtteranceButton);
+            
+            // 清空 speakersContainer 以避免重複渲染
+            speakersContainer.innerHTML = ''; 
+            
+            // 檢查影片是否已經載入，如果已載入則直接顯示 utterances
+            if (videoFile) {
+                const videoUrl = URL.createObjectURL(videoFile);
+                const videoPlayer = document.getElementById('videoPlayer');
+                
+                // 設定影片 URL 並移除重複的 loadedmetadata 事件
+                if (videoPlayer.src !== videoUrl) {
+                    videoPlayer.src = videoUrl;
+                    videoPlayer.addEventListener('loadedmetadata', () => {
+                        renderUtterances(utterances, speakersContainer, videoPlayer);
+                    });
+                } else {
+                    renderUtterances(utterances, speakersContainer, videoPlayer);
                 }
-
-                document.getElementById('downloadButton').style.display = 'block';
-            });
+            } else {
+                renderUtterances(utterances, speakersContainer, document.getElementById('videoPlayer'));
+            }
         }
 
+        function renderUtterances(utterances, speakersContainer, videoPlayer) {
+            // 渲染 utterances，避免重複添加同樣的元素
+            utterances.forEach((utterance, index) => {
+                createUtteranceElement(utterance, speakersContainer, videoPlayer, index);
+            });
+            
+            // 只在最後添加一次新增按鈕
+            if (!document.getElementById('addUtteranceButton')) {
+                const addUtteranceButton = document.createElement('div');
+                addUtteranceButton.id = 'addUtteranceButton';
+                addUtteranceButton.className = 'add-button';
+                addUtteranceButton.textContent = '+ 新增 Utterance';
+                addUtteranceButton.addEventListener('click', () => addUtteranceAtEnd(speakersContainer, videoPlayer));
+                speakersContainer.appendChild(addUtteranceButton);
+            }
+        }
 
         function createUtteranceElement(utterance, speakersContainer, videoPlayer, index) {
             const utteranceDiv = document.createElement('div');
             utteranceDiv.classList.add('speaker');
             utteranceDiv.innerHTML = `<span>${utterance.speaker}: ${utterance.text}</span>`;
 
-            // 上移和下移按鈕
-            const moveUpButton = document.createElement('span');
-            moveUpButton.className = 'move-button';
+            // 創建上移與下移按鈕
+            const moveUpButton = document.createElement('button');
             moveUpButton.textContent = '↑';
-            moveUpButton.title = '上移';
-            moveUpButton.addEventListener('click', () => moveUtterance(index, -1));
+            moveUpButton.style.marginLeft = '10px';
+            moveUpButton.addEventListener('click', () => moveUtterance(index, 'up'));
 
-            const moveDownButton = document.createElement('span');
-            moveDownButton.className = 'move-button';
+            const moveDownButton = document.createElement('button');
             moveDownButton.textContent = '↓';
-            moveDownButton.title = '下移';
-            moveDownButton.addEventListener('click', () => moveUtterance(index, 1));
+            moveDownButton.style.marginLeft = '10px';
+            moveDownButton.addEventListener('click', () => moveUtterance(index, 'down'));
 
             utteranceDiv.appendChild(moveUpButton);
             utteranceDiv.appendChild(moveDownButton);
@@ -119,39 +130,28 @@
             sliderDiv.classList.add('slider');
             utteranceDiv.appendChild(sliderDiv);
 
-            const speakerSelect = document.createElement('select');
-            speakerSelect.className = 'speaker-select';
-            const speakers = [...new Set(utterancesData.utterances.map(u => u.speaker))];
-            speakers.forEach(speaker => {
-                const option = document.createElement('option');
-                option.value = speaker;
-                option.textContent = speaker;
-                speakerSelect.appendChild(option);
-            });
-            speakerSelect.value = utterance.speaker;
-            utteranceDiv.appendChild(speakerSelect);
-            
             speakersContainer.appendChild(utteranceDiv);
 
+            // 初始化noUiSlider
             const slider = noUiSlider.create(sliderDiv, {
                 start: [utterance.start, utterance.end],
                 connect: true,
                 range: {
                     'min': 0,
-                    'max': videoPlayer.duration * 1000
+                    'max': videoPlayer.duration * 1000 // 轉換為毫秒
                 },
-                step: 1
+                step: 1 // 每次移動1毫秒
             });
 
+            // 當滑桿值變更時更新utterance的時間
             slider.on('update', function (values) {
-                utterance.start = Math.round(values[0]);
-                utterance.end = Math.round(values[1]);
+                const start = Math.round(values[0]);
+                const end = Math.round(values[1]);
+                utterance.start = start;
+                utterance.end = end;
             });
 
-            speakerSelect.addEventListener('change', () => {
-                utterance.speaker = speakerSelect.value;
-            });
-
+            // 點擊utterance時將影片撥放到該時間點
             utteranceDiv.addEventListener('click', () => {
                 videoPlayer.currentTime = utterance.start / 1000;
                 videoPlayer.play();
@@ -165,19 +165,20 @@
         }
 
         function moveUtterance(index, direction) {
-            if ((index + direction < 0) || (index + direction >= utterancesData.utterances.length)) return;
-
-            const temp = utterancesData.utterances[index];
-            utterancesData.utterances[index] = utterancesData.utterances[index + direction];
-            utterancesData.utterances[index + direction] = temp;
-
+            if (direction === 'up' && index > 0) {
+                [utterancesData.utterances[index], utterancesData.utterances[index - 1]] =
+                [utterancesData.utterances[index - 1], utterancesData.utterances[index]];
+            } else if (direction === 'down' && index < utterancesData.utterances.length - 1) {
+                [utterancesData.utterances[index], utterancesData.utterances[index + 1]] =
+                [utterancesData.utterances[index + 1], utterancesData.utterances[index]];
+            }
             displaySpeakers(utterancesData.utterances, document.getElementById('videoFile').files[0]);
         }
 
         function addUtteranceAtEnd(speakersContainer, videoPlayer) {
             const newSpeaker = prompt("請輸入 Speaker 名稱:");
             const newTranscript = prompt("請輸入 Utterance 內容:");
-            
+
             if (newSpeaker && newTranscript) {
                 const newUtterance = {
                     speaker: newSpeaker,
@@ -186,13 +187,11 @@
                     end: 5000,
                     words: []
                 };
-                
                 utterancesData.utterances.push(newUtterance);
                 displaySpeakers(utterancesData.utterances, document.getElementById('videoFile').files[0]);
-            } else {
-                alert("請填入有效的 Speaker 和 Utterance 內容。");
             }
         }
+
 
         document.getElementById('downloadButton').addEventListener('click', () => {
             const updatedJson = JSON.stringify(utterancesData, null, 2);
