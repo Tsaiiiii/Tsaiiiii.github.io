@@ -478,19 +478,68 @@
             }
         }
 
-        function updateSaveIndicators() {
-            const indicators = document.querySelectorAll('#saveIndicators .indicator');
-            const saveCountDisplay = document.getElementById('saveCountDisplay');
-            saveCountDisplay.textContent = `保存次數: ${saveCounter}`;
+        // function updateSaveIndicators() {
+        //     const indicators = document.querySelectorAll('#saveIndicators .indicator');
+        //     const saveCountDisplay = document.getElementById('saveCountDisplay');
+        //     saveCountDisplay.textContent = `保存次數: ${saveCounter}`;
 
-            // 重置所有指示器為灰色
+        //     // 重置所有指示器為灰色
+        //     indicators.forEach((indicator, index) => {
+        //         if (index < saveCounter) {
+        //             indicator.style.backgroundColor = 'green'; // 變成綠色
+        //         } else {
+        //             indicator.style.backgroundColor = 'gray'; // 保持灰色
+        //         }
+        //     });
+        // }
+
+        // Initialize a save counter for each character
+        let characterSaveCounters = {};
+        const indicatorLimit = 3; // Each character has 3 indicators
+
+        function initializeCharacterIndicators(character) {
+            const indicatorContainer = document.getElementById('saveIndicators');
+            indicatorContainer.innerHTML = ''; // Clear existing indicators
+
+            for (let i = 0; i < indicatorLimit; i++) {
+                const indicator = document.createElement('div');
+                indicator.classList.add('indicator');
+                indicator.style.width = '60px';
+                indicator.style.height = '60px';
+                indicator.style.borderRadius = '50%';
+                indicator.style.backgroundColor = 'gray';
+                indicatorContainer.appendChild(indicator);
+            }
+
+            // Set the save counter to 0 if it doesn't already exist
+            if (!(character in characterSaveCounters)) {
+                characterSaveCounters[character] = 0;
+            }
+        }
+
+        function updateCharacterIndicators(character) {
+            const indicators = document.querySelectorAll('#saveIndicators .indicator');
+            const saveCount = characterSaveCounters[character];
+
             indicators.forEach((indicator, index) => {
-                if (index < saveCounter) {
-                    indicator.style.backgroundColor = 'green'; // 變成綠色
+                if (index < saveCount) {
+                    indicator.style.backgroundColor = 'green'; // Turn light green
                 } else {
-                    indicator.style.backgroundColor = 'gray'; // 保持灰色
+                    indicator.style.backgroundColor = 'gray';  // Keep light gray
                 }
             });
+        }
+
+        function saveRecording() {
+            const selectedCharacter = document.getElementById('muteCharacter').value;
+            if (selectedCharacter && characterSaveCounters[selectedCharacter] < indicatorLimit) {
+                characterSaveCounters[selectedCharacter]++;
+                updateCharacterIndicators(selectedCharacter);
+
+                console.log(`Saved recording for character: ${selectedCharacter}. Save count: ${characterSaveCounters[selectedCharacter]}`);
+            } else {
+                console.log('No character selected or save limit reached.');
+            }
         }
 
         function downloadRecording() {
@@ -518,9 +567,18 @@
                 const currentTimestamp = date + ' ' + time;
                 const username = document.getElementById('username').value;
                 console.log("Click download\nTimestamp:", currentTimestamp, "\n");
-                if (saveCounter < 3) { // 每次保存不超過三次
-                    saveCounter += 1;
-                    updateSaveIndicators(); // 更新指示器
+                // if (saveCounter < 3) { // 每次保存不超過三次
+                //     saveCounter += 1;
+                //     updateSaveIndicators(); // 更新指示器
+                // }
+                const selectedCharacter = document.getElementById('muteCharacter').value;
+                if (selectedCharacter && characterSaveCounters[selectedCharacter] < indicatorLimit) {
+                    characterSaveCounters[selectedCharacter]++;
+                    updateCharacterIndicators(selectedCharacter);
+
+                    console.log(`Saved recording for character: ${selectedCharacter}. Save count: ${characterSaveCounters[selectedCharacter]}`);
+                } else {
+                    console.log('No character selected or save limit reached.');
                 }
                 a.href = URL.createObjectURL(wavBlob); // Create a URL for the WAV file
                 a.download = `${username}_${currentTimestamp}.wav`; // Use the timestamp as the filename
@@ -718,9 +776,11 @@
             if (currentVideoKey) {
                 selectVideo(currentVideoKey);
             }
-            showMainContent('practice_mode');
+            showMainContent('record_mode');
             const muteCharacterSelect = document.getElementById('muteCharacter');
             const character = muteCharacterSelect.value;
+            initializeCharacterIndicators(character);
+            updateCharacterIndicators(character);
             const date = new Date().toISOString().split('T')[0];
             const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
             const currentTimestamp = date + ' ' + time;
