@@ -530,18 +530,6 @@
             });
         }
 
-        function saveRecording() {
-            const selectedCharacter = document.getElementById('muteCharacter').value;
-            if (selectedCharacter && characterSaveCounters[selectedCharacter] < indicatorLimit) {
-                characterSaveCounters[selectedCharacter]++;
-                updateCharacterIndicators(selectedCharacter);
-
-                console.log(`Saved recording for character: ${selectedCharacter}. Save count: ${characterSaveCounters[selectedCharacter]}`);
-            } else {
-                console.log('No character selected or save limit reached.');
-            }
-        }
-
         function downloadRecording() {
             if (!recordedAudioURL) {
                 alert('尚未錄製音檔!');
@@ -576,7 +564,7 @@
                     characterSaveCounters[selectedCharacter]++;
                     updateCharacterIndicators(selectedCharacter);
 
-                    console.log(`Saved recording for character: ${selectedCharacter}. Save count: ${characterSaveCounters[selectedCharacter]}`);
+                    console.log(`Saved recording for character: ${selectedCharacter}.\nSave count: ${characterSaveCounters[selectedCharacter]}`);
                 } else {
                     console.log('No character selected or save limit reached.');
                 }
