@@ -177,7 +177,7 @@
                             <div class="indicator" style="width: 60px; height: 60px; border-radius: 50%; background-color: gray;"></div>
                         </div>
                         <p id="saveCountDisplay" style="display: none;">保存次數: 0</p>
-                        <audio id="recordedAudio" style="display: none;"></audio>
+                        <!-- <audio id="recordedAudio" style="display: none;"></audio> -->
                     </div> 
     
     
@@ -280,14 +280,14 @@
             mainContents.forEach(content => {
                 content.style.display = 'none';
             });
-            const date = new Date().toISOString().split('T')[0];
-            const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
-            const currentTimestamp = date + ' ' + time;
-            console.log("Select", contentId, '\nTimestamp:', currentTimestamp, "\n");
 
             // 显示指定的 mainContent
             const targetContent = document.getElementById(contentId);
             if (targetContent) {
+                const date = new Date().toISOString().split('T')[0];
+                const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
+                const currentTimestamp = date + ' ' + time;
+                console.log("Select", contentId, '\nTimestamp:', currentTimestamp, "\n");
                 targetContent.style.display = 'block';
             }
         }
@@ -332,166 +332,140 @@
 
         let videoSource;
         let recordedSource;
+        let merger;
         let isVsConnected = false;
         let isRsConnected = false;
-        let merger;
         let isMerConnected = false;
-        let saveCounter = 0;
 
         async function playRecordedAudio() {
-            if(!isRsConnected)
-            {
-                await stopRecording(); // 等待錄音停止並處理數據
+            // 停止錄音如果仍在進行中
+            if (!isRsConnected) {
+                await stopRecording(); // 停止錄音並處理數據
             }
 
             const date = new Date().toISOString().split('T')[0];
             const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
             const currentTimestamp = date + ' ' + time;
-            console.log("Play recording\nTimestamp:", currentTimestamp, "\n");
-
-            const recordedAudioElement = document.getElementById('recordedAudio');
-            recordedAudioElement.src = recordedAudioURL;
-            recordedAudioElement.style.display = 'none'; // 顯示錄音播放元件
-            recordedAudioElement.controls = true;
-            // recordedAudioElement.play();
+            console.log("Click play recording\nTimestamp:", currentTimestamp, "\n");
 
             const videoElement = document.getElementById('videoElement');
             videoElement.controls = false;
-            if (!audioContext || audioContext.state == 'closed') {
+
+            // 檢查AudioContext是否已創建，並且不在關閉狀態
+            if (!audioContext || audioContext.state === 'closed') {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
             }
-            // const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            if(videoSource == undefined)
-            {
+
+            // 清理之前的MediaElementSourceNode
+            if (videoSource) {
+                videoSource.disconnect();
+                videoSource = null; // 確保被重置
+            }
+            if (recordedSource) {
+                recordedSource.disconnect();
+                recordedSource = null; // 確保被重置
+            }
+            if (merger) {
+                merger.disconnect();
+                merger = null; // 確保被重置
+            }
+
+            // 創建新的音頻元素
+            const recordedAudioElement = document.createElement('audio');
+            recordedAudioElement.src = recordedAudioURL;
+            recordedAudioElement.style.display = 'none';
+            recordedAudioElement.controls = true;
+            document.body.appendChild(recordedAudioElement); // 將元素添加到DOM中
+
+            // 創建MediaElementSourceNode
+            try {
+                // 先確保斷開了所有的舊連接
                 videoSource = audioContext.createMediaElementSource(videoElement);
-            }
-
-            if(recordedSource == undefined)
-            {
                 recordedSource = audioContext.createMediaElementSource(recordedAudioElement);
-            }
-            
-            if(merger == undefined)
-            {
-                merger = audioContext.createChannelMerger(2); // 创建音频合并节点
+            } catch (error) {
+                console.error("Error creating MediaElementSource:", error);
+                return; // 停止函數執行
             }
 
-            if(isVsConnected == false)
-            {
-                videoSource.connect(merger, 0, 0);
-                isVsConnected = true;
-            }
-            if(isRsConnected == false)
-            {
-                recordedSource.connect(merger, 0, 1);
-                isRsConnected = true;
-            }
-            if(isMerConnected == false)
-            {
-                merger.connect(audioContext.destination);
-                isMerConnected = true;
-            }
+            // 創建合併器
+            merger = audioContext.createChannelMerger(2);
 
-            // 添加釋放資源的邏輯
+            // 將來源連接到合併器
+            videoSource.connect(merger, 0, 0);
+            recordedSource.connect(merger, 0, 1);
+
+            // 將合併器連接到目的地
+            merger.connect(audioContext.destination);
+
+            // 清理資源的函數
             const cleanup = () => {
-                recordedAudioElement.pause(); // 停止播放
-                videoElement.pause();         // 停止播放
+                recordedAudioElement.pause();
+                videoElement.pause();
                 recordedAudioElement.currentTime = 0;
                 videoElement.currentTime = 0;
+
+                // 移除audio元素
+                if (recordedAudioElement.parentNode) {
+                    document.body.removeChild(recordedAudioElement);
+                }
             };
 
-            // 監聽音頻播放結束事件
             recordedAudioElement.addEventListener('ended', cleanup);
-
             recordedAudioElement.addEventListener('play', () => {
                 videoElement.currentTime = recordedAudioElement.currentTime;
                 videoElement.play();
             });
-
             recordedAudioElement.addEventListener('pause', () => {
-                if (recordedAudioElement.currentTime == recordedAudioElement.duration) {
-                    cleanup(); // 如果播放到最後，也釋放資源
+                if (recordedAudioElement.currentTime === recordedAudioElement.duration) {
+                    cleanup();
                 }
-                // videoElement.pause();
             });
-
             recordedAudioElement.addEventListener('timeupdate', () => {
                 videoElement.currentTime = recordedAudioElement.currentTime;
             });
 
+            // 播放錄製的音頻
             recordedAudioElement.play();
         }
 
+
         function resetRecording() {
-            // 停止正在錄製的音頻
             if (mediaRecorder && isRecording) {
                 stopRecording();
             }
-            
+
             const date = new Date().toISOString().split('T')[0];
             const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
             const currentTimestamp = date + ' ' + time;
-            console.log("Click reset\nTimestamp:", currentTimestamp);
+            console.log("Click play recording\nTimestamp:", currentTimestamp, "\n");
 
-            // 清空錄音資料
-            recordedChunks = [];
-            recordedAudioURL = '';
             const recordedAudioElement = document.getElementById('recordedAudio');
-            recordedAudioElement.src = '';  // 清除已錄制音頻的 URL
+            recordedAudioElement.src = '';
             recordedAudioElement.style.display = 'none';
 
-            // 重置錄音按鈕狀態
-            document.getElementById('recordButton').textContent = '配音';
-            document.getElementById('recordButton').classList.remove('recording');
-            isRecording = false;
-
-            // 停止播放視頻和音頻
-            const videoElement = document.getElementById('videoElement');
-            // videoElement.pause();
-            // videoElement.currentTime = 0;  // 將視頻設置為開頭
-            recordedAudioElement.pause(); // 停止播放
-            videoElement.pause();         // 停止播放
-            recordedAudioElement.currentTime = 0;
-            videoElement.currentTime = 0;
-
-            // if (audio) {
-            //     audio.pause();
-            //     audio.currentTime = 0;  // 將音頻設置為開頭
-            // }
-
-            // merger.disconnect(audioContext.destination);
-            // videoSource.disconnect(merger);
-            // videoSource.disconnect();
-            recordedSource.disconnect(merger);
-            recordedSource.disconnect();
-            merger.disconnect();
-            // videoSource = undefined;
-            recordedSource = undefined;
-            merger = undefined;
-
-            // isVsConnected = false;
-            isRecording = false;
-            isMerConnected = false;
-
-            if (audioContext && audioContext.state !== 'closed') {
-                audioContext.close(); // Close the existing AudioContext
+            // 清理
+            if (videoSource) {
+                videoSource.disconnect();
+                videoSource = null; // 重置為下一次使用
             }
+            if (recordedSource) {
+                recordedSource.disconnect();
+                recordedSource = null; // 重置為下一次使用
+            }
+            if (merger) {
+                merger.disconnect();
+                merger = null; // 重置為下一次使用
+            }
+
+            // 如果需要，重置上下文
+            if (audioContext && audioContext.state !== 'closed') {
+                audioContext.close();
+            }
+
+            // 為下一次錄音創建新的上下文
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
         }
 
-        // function updateSaveIndicators() {
-        //     const indicators = document.querySelectorAll('#saveIndicators .indicator');
-        //     const saveCountDisplay = document.getElementById('saveCountDisplay');
-        //     saveCountDisplay.textContent = `保存次數: ${saveCounter}`;
-
-        //     // 重置所有指示器為灰色
-        //     indicators.forEach((indicator, index) => {
-        //         if (index < saveCounter) {
-        //             indicator.style.backgroundColor = 'green'; // 變成綠色
-        //         } else {
-        //             indicator.style.backgroundColor = 'gray'; // 保持灰色
-        //         }
-        //     });
-        // }
 
         // Initialize a save counter for each character
         let characterSaveCounters = {};
@@ -664,6 +638,7 @@
                     const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
                     const currentTimestamp = date + ' ' + time;
                     console.log('Select Video "', key, '"\nTimestamp:',currentTimestamp, "\n");
+                    showMainContent('practice_mode');
                 };
                 videoListElement.appendChild(listItem);
             });
@@ -756,15 +731,12 @@
             });
 
             videoElement.load();
-
-            showMainContent('practice_mode');
         }
 
         function muteCharacterChange() {
             if (currentVideoKey) {
                 selectVideo(currentVideoKey);
             }
-            showMainContent('record_mode');
             const muteCharacterSelect = document.getElementById('muteCharacter');
             const character = muteCharacterSelect.value;
             initializeCharacterIndicators(character);
