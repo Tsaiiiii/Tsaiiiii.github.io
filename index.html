@@ -621,13 +621,6 @@
                 };
                 videoListElement.appendChild(listItem);
             });
-
-            // 自动选择第一个视频
-            const firstVideoListItem = videoListElement.querySelector('li');
-            if (firstVideoListItem) {
-                firstVideoListItem.classList.add('selected');
-                firstVideoListItem.click();
-            }
         }
 
         function selectVideo(videoKey) {
@@ -679,13 +672,6 @@
                 videoElement.appendChild(track);
             }
 
-            // const track = document.createElement('track');
-            // track.kind = 'subtitles';
-            // track.label = 'English';
-            // track.srclang = 'en';
-            // track.src = videoFiles[videoKey].subtitlesSrc;
-            // videoElement.appendChild(track);
-
              // 设置练习视频源
             practiceVideoElement.src = videoFiles[videoKey].src;
             practiceVideoElement.muted = false;
@@ -724,12 +710,15 @@
             });
 
             videoElement.load();
+
+            showMainContent('practice_mode');
         }
 
         function muteCharacterChange() {
             if (currentVideoKey) {
                 selectVideo(currentVideoKey);
             }
+            showMainContent('practice_mode');
             const muteCharacterSelect = document.getElementById('muteCharacter');
             const character = muteCharacterSelect.value;
             const date = new Date().toISOString().split('T')[0];
