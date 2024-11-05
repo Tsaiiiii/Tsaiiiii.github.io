@@ -1,40 +1,40 @@
 WEBVTT
 
 1
-00:00:01.000 --> 00:00:03.786
-Hello! DC is a city for walking
+00:00:01.000 --> 00:00:03.827
+Hello! DC is a city for walking.
 
 2
-00:00:03.786 --> 00:00:07.829
- In our neighborhood, I can do all my errands
+00:00:03.827 --> 00:00:07.891
+ In our neighborhood, I can do all my errands.
 
 3
-00:00:07.829 --> 00:00:14.748
- Marsha, before we get ice cream, I need to return three books to the library
+00:00:07.891 --> 00:00:10.806
+ Marsha, before we get ice cream,
 
 4
-00:00:14.748 --> 00:00:16.725
- Where is the library?
+00:00:10.806 --> 00:00:14.781
+ I need to return three books to the library.
 
 5
+00:00:14.781 --> 00:00:16.725
+ Where is the library?
+
+6
 00:00:14.065 --> 00:00:15.065
 <c.yellow>●●●</c.yellow>
 
-6
+7
 00:00:15.065 --> 00:00:16.065
 <c.yellow>●●</c.yellow>
 
-7
+8
 00:00:16.065 --> 00:00:17.065
 <c.yellow>●</c.yellow>
 
-8
-00:00:17.065 --> 00:00:20.449
-<c.yellow>It is on this street on the corner</c.yellow>
-
 9
-00:00:20.449 --> 00:00:20.449
-<c.yellow></c.yellow>
+00:00:17.065 --> 00:00:20.449
+<c.yellow>It is on this street on the corner.</c.yellow>
 
 10
 00:00:20.577 --> 00:00:21.161
@@ -58,31 +58,31 @@ Awesome!
 
 15
 00:00:24.505 --> 00:00:27.605
-Marsha, I can return the books here
+Marsha, I can return the books here.
 
 16
-00:00:27.605 --> 00:00:27.605
-
-
-17
 00:00:27.025 --> 00:00:28.025
 <c.yellow>●●●</c.yellow>
 
-18
+17
 00:00:28.025 --> 00:00:29.025
 <c.yellow>●●</c.yellow>
 
-19
+18
 00:00:29.025 --> 00:00:30.025
 <c.yellow>●</c.yellow>
 
-20
+19
 00:00:30.025 --> 00:00:33.566
 <c.yellow>Anna, what are those in the books?</c.yellow>
 
+20
+00:00:34.226 --> 00:00:41.093
+Marsha, these are letters to my family and friends back home … four letters!
+
 21
-00:00:34.226 --> 00:00:44.165
-Marsha, these are letters to my family and friends back home … four letters! Is there a post office near here?
+00:00:41.093 --> 00:00:44.165
+ Is there a post office near here?
 
 22
 00:00:41.745 --> 00:00:42.745
@@ -97,186 +97,166 @@ Marsha, these are letters to my family and friends back home … four letters! I
 <c.yellow>●</c.yellow>
 
 25
-00:00:44.745 --> 00:00:45.242
-<c.yellow>Um, no</c.yellow>
+00:00:44.745 --> 00:00:48.021
+<c.yellow>Um, no. The post office is far from here.</c.yellow>
 
 26
-00:00:45.242 --> 00:00:47.973
-<c.yellow> The post office is far from here</c.yellow>
+00:00:48.021 --> 00:00:51.697
+<c.yellow> But there is a mailbox across from the store.</c.yellow>
 
 27
-00:00:47.973 --> 00:00:51.697
-<c.yellow> But there is a mailbox across from the store</c.yellow>
+00:00:51.841 --> 00:00:55.709
+Awesome! Let’s go!
 
 28
-00:00:51.697 --> 00:00:51.697
-<c.yellow></c.yellow>
+00:00:55.709 --> 00:01:03.015
+ Marsha, now I need to buy stamps.
 
 29
-00:00:51.841 --> 00:01:03.015
-Awesome! Let’s go! Marsha, now I need to buy stamps
-
-30
-00:01:03.015 --> 00:01:03.015
-
-
-31
 00:01:00.095 --> 00:01:01.095
 <c.yellow>●●●</c.yellow>
 
-32
+30
 00:01:01.095 --> 00:01:02.095
 <c.yellow>●●</c.yellow>
 
-33
+31
 00:01:02.095 --> 00:01:03.095
 <c.yellow>●</c.yellow>
 
-34
+32
 00:01:03.095 --> 00:01:04.423
 <c.yellow>Do you have cash?</c.yellow>
 
-35
-00:01:04.599 --> 00:01:04.794
-No
+33
+00:01:04.599 --> 00:01:07.431
+No. Is there a bank near here?
 
-36
-00:01:04.794 --> 00:01:07.431
- Is there a bank near here?
-
-37
+34
 00:01:04.623 --> 00:01:05.623
 <c.yellow>●●●</c.yellow>
 
-38
+35
 00:01:05.623 --> 00:01:06.623
 <c.yellow>●●</c.yellow>
 
-39
+36
 00:01:06.623 --> 00:01:07.623
 <c.yellow>●</c.yellow>
 
-40
+37
 00:01:07.623 --> 00:01:09.475
-<c.yellow>There is a bank behind you</c.yellow>
+<c.yellow>There is a bank behind you.</c.yellow>
+
+38
+00:01:10.095 --> 00:01:12.298
+Thanks, Marsha.
+
+39
+00:01:12.298 --> 00:01:17.437
+ You know our neighborhood so well.
+
+40
+00:01:17.437 --> 00:01:19.934
+ Now I have cash.
 
 41
-00:01:09.475 --> 00:01:09.475
-<c.yellow></c.yellow>
+00:01:19.934 --> 00:01:22.577
+ I can buy stamps.
 
 42
-00:01:10.095 --> 00:01:12.252
-Thanks, Marsha
-
-43
-00:01:12.252 --> 00:01:17.492
- You know our neighborhood so well
-
-44
-00:01:17.492 --> 00:01:19.957
- Now I have cash
-
-45
-00:01:19.957 --> 00:01:22.577
- I can buy stamps
-
-46
-00:01:22.577 --> 00:01:22.577
-
-
-47
 00:01:19.761 --> 00:01:20.761
 <c.yellow>●●●</c.yellow>
 
-48
+43
 00:01:20.761 --> 00:01:21.761
 <c.yellow>●●</c.yellow>
 
-49
+44
 00:01:21.761 --> 00:01:22.761
 <c.yellow>●</c.yellow>
 
-50
+45
 00:01:22.761 --> 00:01:25.329
-<c.yellow>That store sells stamps</c.yellow>
+<c.yellow>That store sells stamps.</c.yellow>
 
-51
-00:01:25.329 --> 00:01:25.329
-<c.yellow></c.yellow>
+46
+00:01:25.457 --> 00:01:29.505
+Wait here. I have stamps.
 
-52
-00:01:25.457 --> 00:01:27.041
-Wait here
-
-53
-00:01:27.041 --> 00:01:29.505
- I have stamps
-
-54
-00:01:29.505 --> 00:01:29.505
-
-
-55
+47
 00:01:26.625 --> 00:01:27.625
 <c.yellow>●●●</c.yellow>
 
-56
+48
 00:01:27.625 --> 00:01:28.625
 <c.yellow>●●</c.yellow>
 
-57
+49
 00:01:28.625 --> 00:01:29.625
 <c.yellow>●</c.yellow>
 
-58
+50
 00:01:29.625 --> 00:01:31.325
-<c.yellow>Wow, you’re fast</c.yellow>
+<c.yellow>Wow, you’re fast.</c.yellow>
 
-59
-00:01:31.325 --> 00:01:31.325
-<c.yellow></c.yellow>
+51
+00:01:32.265 --> 00:01:35.040
+Thank you, thank you letters,
 
-60
-00:01:32.265 --> 00:01:40.685
-Thank you, thank you letters, for sending my words… my love … to my family and friends -
+52
+00:01:35.040 --> 00:01:40.685
+ for sending my words… my love … to my family and friends -
 
-61
+53
 00:01:42.585 --> 00:01:43.585
 <c.yellow>●●●</c.yellow>
 
-62
+54
 00:01:43.585 --> 00:01:44.585
 <c.yellow>●●</c.yellow>
 
-63
+55
 00:01:44.585 --> 00:01:45.585
 <c.yellow>●</c.yellow>
 
-64
+56
 00:01:45.585 --> 00:01:47.205
 <c.yellow>Do you have more cash?</c.yellow>
 
-65
+57
 00:01:47.545 --> 00:01:48.485
 I do!
 
-66
+58
 00:01:46.705 --> 00:01:47.705
 <c.yellow>●●●</c.yellow>
 
-67
+59
 00:01:47.705 --> 00:01:48.705
 <c.yellow>●●</c.yellow>
 
-68
+60
 00:01:48.705 --> 00:01:49.705
 <c.yellow>●</c.yellow>
 
-69
+61
 00:01:49.705 --> 00:01:50.885
 <c.yellow>Ice cream!!</c.yellow>
 
-70
-00:01:53.785 --> 00:02:03.585
-I love my new neighborhood! Everything is near our apartment! Even hair salons, and ice cream! Until next time!
+62
+00:01:53.785 --> 00:01:56.169
+I love my new neighborhood!
+
+63
+00:01:56.169 --> 00:01:59.171
+ Everything is near our apartment!
+
+64
+00:01:59.171 --> 00:02:02.084
+ Even hair salons, and ice cream!
+
+65
+00:02:02.084 --> 00:02:03.585
+ Until next time!
 
