@@ -107,10 +107,6 @@
         <div class="container6" style="height:60px;" >
             <h2>使用者名稱：</h2>
             <input type="text" id="username" style="height:50px;">
-            <!-- <div class="container1">
-                <button class="myButton" onclick="showMainContent('mainContent1')">練習模式</button>
-                <button class="myButton" onclick="showMainContent('mainContent2')">配音模式</button>
-            </div> -->
         </div>
 
         <div class="container5">
@@ -161,13 +157,8 @@
                         <p id="saveCountDisplay" style="display: none;">保存次數: 0</p>
                         <!-- <audio id="recordedAudio" style="display: none;"></audio> -->
                     </div> 
-    
-    
-                    
                 </div>
             </div>
-
-            
         </div> 
     </div>
 
@@ -514,16 +505,13 @@
                 //     updateSaveIndicators(); // 更新指示器
                 // }
                 const selectedCharacter = document.getElementById('muteCharacter').value;
-                if (selectedCharacter && characterSaveCounters[selectedCharacter] < indicatorLimit) {
-                    characterSaveCounters[selectedCharacter]++;
+                characterSaveCounters[selectedCharacter]++;
+                if (selectedCharacter && characterSaveCounters[selectedCharacter] <= indicatorLimit) {
                     updateCharacterIndicators(selectedCharacter);
-
-                    console.log(`Saved recording for character: ${selectedCharacter}.\nSave count: ${characterSaveCounters[selectedCharacter]}`);
-                } else {
-                    console.log('No character selected or save limit reached.');
                 }
+                console.log(`Saved recording for character: ${selectedCharacter}.\nSave count: ${characterSaveCounters[selectedCharacter]}`);
                 a.href = URL.createObjectURL(wavBlob); // Create a URL for the WAV file
-                a.download = `${username}_${currentTimestamp}.wav`; // Use the timestamp as the filename
+                a.download = `${username}_${selectedCharacter}_${characterSaveCounters[selectedCharacter]}_${currentTimestamp}.wav`; // Use the timestamp as the filename
                 document.body.appendChild(a); // Append the element to the page
                 a.click(); // Trigger the download
                 document.body.removeChild(a); // Remove the element after the download
