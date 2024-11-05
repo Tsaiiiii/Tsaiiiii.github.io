@@ -147,7 +147,7 @@
     
                         <button class="myButton" id="recordButton" onclick="toggleRecording()">錄音</button>
                         <button class="myButton" onclick="playRecordedAudio()">播放</button>
-                        <button class="myButton" onclick="downloadRecording()">保存</button>
+                        <button id="save_btn" class="myButton" onclick="downloadRecording()" style="display: none;">保存</button>
                         <blockquote></blockquote>
                         <div id="saveIndicators" style="display: flex; gap: 10px;">
                             <div class="indicator" style="width: 60px; height: 60px; border-radius: 50%; background-color: gray;"></div>
@@ -275,9 +275,16 @@
             const videoElement = document.getElementById('videoElement');
             videoElement.play();
 
+            videoElement.addEventListener('ended', async () => {
+                document.getElementById("save_btn").style.display = "block";
+                if (isRecording) {
+                    toggleRecording(); // 自動點選暫停按鈕
+                }
+            });
+
             // Only create a new AudioContext if one does not already exist
             if (!audioContext || audioContext.state === 'closed') {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();       
+                audioContext = new (window.AudioContext || window.webkitAudioContext)(); 
             }       
         }
 
@@ -412,6 +419,8 @@
                 stopRecording();
             }
 
+            document.getElementById("save_btn").style.display = "none";
+
             const date = new Date().toISOString().split('T')[0];
             const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
             const currentTimestamp = date + ' ' + time;
@@ -436,7 +445,6 @@
             // 為下一次錄音創建新的上下文
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
         }
-
 
         // Initialize a save counter for each character
         let characterSaveCounters = {};
@@ -500,10 +508,7 @@
                 const currentTimestamp = date + ' ' + time;
                 const username = document.getElementById('username').value;
                 console.log("Click download\nTimestamp:", currentTimestamp, "\n");
-                // if (saveCounter < 3) { // 每次保存不超過三次
-                //     saveCounter += 1;
-                //     updateSaveIndicators(); // 更新指示器
-                // }
+
                 const selectedCharacter = document.getElementById('muteCharacter').value;
                 characterSaveCounters[selectedCharacter]++;
                 if (selectedCharacter && characterSaveCounters[selectedCharacter] <= indicatorLimit) {
@@ -516,6 +521,8 @@
                 a.click(); // Trigger the download
                 document.body.removeChild(a); // Remove the element after the download
             };
+
+            document.getElementById("save_btn").style.display = "none";
         }
 
         // Convert AudioBuffer to WAV format

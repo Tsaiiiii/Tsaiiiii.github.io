@@ -1,5 +1,5 @@
 const videoFiles = {
-    "Lesson 2: Hello! I'm Anna!": {
+    "Lesson 2": {
         "src": "mp4/video2.mp4",
         "audioSrc": "wav/2_wav.wav",
         "subtitlesSrc": {
@@ -30,7 +30,7 @@ const videoFiles = {
             ]
         }
     },
-    "Lesson 10: Come Over to My Place": {
+    "Lesson 10": {
         "src": "mp4/video10.mp4",
         "audioSrc": "wav/10_wav.wav",
         "subtitlesSrc": {
@@ -63,7 +63,7 @@ const videoFiles = {
             ]
         }
     },
-    "Lesson 11: Come Over to My Place": {
+    "Lesson 11": {
         "src": "mp4/video11.mp4",
         "audioSrc": "wav/11_wav.wav",
         "subtitlesSrc": {
