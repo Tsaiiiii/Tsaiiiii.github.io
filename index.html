@@ -145,7 +145,7 @@
     
                         <blockquote></blockquote>
     
-                        <button class="myButton" id="recordButton" onclick="toggleRecording()">錄音</button>
+                        <button class="myButton" id="recordButton" onclick="toggleRecording()" disabled>錄音</button>
                         <button class="myButton" onclick="playRecordedAudio()">播放</button>
                         <button id="save_btn" class="myButton" onclick="downloadRecording()" style="display: none;">保存</button>
                         <blockquote></blockquote>
@@ -228,6 +228,10 @@
             event.returnValue = ''; // 顯示預設的提示訊息
         });
 
+        document.getElementById('videoElement').addEventListener('loadedmetadata', () => {
+            // 影片元數據加載完成後，啟用錄音按鈕
+            document.getElementById('recordButton').disabled = false;
+        });
 
         function toggleRecording() {
             const date = new Date().toISOString().split('T')[0];
