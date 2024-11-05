@@ -32,7 +32,7 @@
             display: flex;
             flex-direction: column; /* 让内容垂直排列 */
             align-items: center; /* 让内容水平居中 */
-            width: 80%; /* 设置容器宽度 */
+            width: 73%; /* 设置容器宽度 */
         }
         .container4 {
             display: flex;
@@ -45,23 +45,19 @@
         .container5 {
             display: flex;
             flex-direction: row; 
-            /*justify-content: space-between; /* 让内容水平均匀分布 */
-            /*width: 110%; /* 设置容器宽度 */
             margin-bottom: 20px; /* 设置容器之间的间距 */
             column-gap: 50px;
         }
         .container6 {
             display: flex;
             flex-direction: row; 
-            /*justify-content: space-between; /* 让内容水平均匀分布 */
-            /*width: 110%; /* 设置容器宽度 */
-            /*margin-bottom: 20px; /* 设置容器之间的间距 */
             background-color: #ACD6FF;
         }
         #sidebar {
-            width: 200px;
+            width: 220px;
             background-color: #cfe2f3;
             padding: 10px;
+            font-size: 20px;
         }
         #sidebar ul {
             list-style-type: none;
@@ -71,10 +67,6 @@
             margin: 5px 0;
             cursor: pointer;
         }
-        /*#mainContent {
-            flex: 1; /* 让 mainContent 占据剩余的所有空间 */
-/*            padding: 20px;*/
-/*        }*/
         .mainContent {
             flex: 1;
             padding: 20px;
@@ -99,8 +91,6 @@
         }
         ::cue {
             color: white; /* 设置字幕文本颜色 */
-            /* background: center / contain no-repeat url(""),
-            #eee 35% url("https://i.pinimg.com/736x/ae/70/73/ae7073958cc76a0d5b637e42eb7af226.jpg"); */
             font-size: 40px; /* 设置字幕字体大小 */
         }
         ::cue(.yellow) {
@@ -130,14 +120,6 @@
                 <ul id="videoList">
                 </ul>
             </div>
-
-            <!-- <div id="mainContent1" class="mainContent">
-                <video controls width="900" id="practiceVideo">
-                    Your browser does not support the video tag.
-                </video>
-            </div> -->
-
-            <!-- <div id="mainContent2" class="mainContent"> -->
             <div class = "container3">
                 <div class = "container4">
                     <button class="myButton" onclick="showMainContent('practice_mode')" style="height: 60px;">練習模式</button>
