@@ -98,5 +98,65 @@ const videoFiles = {
                 { "start": 109.705 , "end": 110.885 }
             ]
         }
+    },
+    "Lesson 16": {
+        "src": "mp4/video16.mp4",
+        "audioSrc": "wav/16_wav.wav",
+        "subtitlesSrc": {
+            "Anna": "subtitles/16_A.vtt",
+            "Marsha": "subtitles/16_B.vtt",
+            "default": "subtitles/16_practice.vtt"
+        },
+        "muteSegments": {
+            "Interviewer": [
+                { "start": 2 , "end": 27.531 },
+                { "start": 29.715 , "end": 31.495 },
+                { "start": 33.995 , "end": 35.939 },
+                { "start": 37.907 , "end": 40.195 },
+                { "start": 44.915 , "end": 47.411 },
+                { "start": 51.645 , "end": 54.794 },
+                { "start": 67.605 , "end": 77.145 },
+                { "start": 87.845 , "end": 91.421 },
+                { "start": 93.805 , "end": 105.835 },
+                { "start": 108.135 , "end": 110.395 },
+                { "start": 112.367 , "end": 114.991 },
+                { "start": 118.167 , "end": 120.183 },
+                { "start": 122.935 , "end": 126.103 },
+                { "start": 130.303 , "end": 132.935 },
+                { "start": 135.035 , "end": 137.107 },
+                { "start": 140.475 , "end": 152.755 },
+                { "start": 154.035 , "end": 156.707 },
+                { "start": 161.091 , "end": 164.695 },
+                { "start": 166.915 , "end": 170.74 },
+                { "start": 175.451 , "end": 177.963 },
+                { "start": 181.363 , "end": 183.327 },
+                { "start": 184.159 , "end": 184.783 },
+                { "start": 188.295 , "end": 214.863 }
+            ],
+            "Interviewee": [
+                { "start": 27.683 , "end": 29.055 },
+                { "start": 31.835 , "end": 33.335 },
+                { "start": 36.107 , "end": 37.739 },
+                { "start": 40.355 , "end": 44.175 },
+                { "start": 47.603 , "end": 50.655 },
+                { "start": 54.826 , "end": 66.785 },
+                { "start": 77.845 , "end": 87.065 },
+                { "start": 91.573 , "end": 92.745 },
+                { "start": 106.695 , "end": 107.435 },
+                { "start": 110.935 , "end": 112.199 },
+                { "start": 115.183 , "end": 117.999 },
+                { "start": 120.359 , "end": 122.315 },
+                { "start": 126.239 , "end": 130.131 },
+                { "start": 133.395 , "end": 134.695 },
+                { "start": 137.251 , "end": 139.015 },
+                { "start": 152.875 , "end": 153.535 },
+                { "start": 156.891 , "end": 160.947 },
+                { "start": 165.115 , "end": 166.615 },
+                { "start": 170.515 , "end": 175.307 },
+                { "start": 178.139 , "end": 181.251 },
+                { "start": 183.451 , "end": 184.063 },
+                { "start": 184.879 , "end": 185.555 }
+            ]
+        }
     }
 }
