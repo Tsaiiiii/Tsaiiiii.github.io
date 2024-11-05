@@ -35,29 +35,30 @@ const videoFiles = {
         "subtitlesSrc": {
             "Anna": "subtitles/10_A.vtt",
             "Ashley": "subtitles/10_B.vtt",
+            "default": "subtitles/10_practice",
         },
         "muteSegments": {
             "Anna": [
-                { "start": 1, "end": 14.395 },
-                { "start": 19.126, "end": 22.93 },
-                { "start": 25.87, "end": 33.4 },
-                { "start": 40.44, "end": 43.896 },
-                { "start": 46.008, "end": 46.976 },
-                { "start": 52.584, "end": 57.138 },
-                { "start": 60.496, "end": 62.58 },
-                { "start": 65.815, "end": 71.52 },
-                { "start": 72.445, "end": 78.303 }
+                { "start": 1.72 , "end": 14.215 },
+                { "start": 19.126 , "end": 22.93 },
+                { "start": 25.87 , "end": 33.42 },
+                { "start": 40.44 , "end": 43.896 },
+                { "start": 46.008 , "end": 46.976 },
+                { "start": 52.012 , "end": 56.376 },
+                { "start": 60.496 , "end": 62.58 },
+                { "start": 65.756 , "end": 71.349 },
+                { "start": 74.985 , "end": 78.828 }
             ],
             "Ashley": [
-                { "start": 14.395, "end": 19.022 },
-                { "start": 23.23, "end": 25.74 },
-                { "start": 33.84, "end": 39.58 },
-                { "start": 44.048, "end": 45.816 },
-                { "start": 47.048, "end": 52.137 },
-                { "start": 57.138, "end": 60.352 },
-                { "start": 63.04, "end": 65.815 },
-                { "start": 71.52, "end": 72 },
-                { "start": 78.303, "end": 78.92 }
+                { "start": 14.368 , "end": 18.964 },
+                { "start": 23.23 , "end": 25.74 },
+                { "start": 33.84 , "end": 39.58 },
+                { "start": 44.048 , "end": 45.816 },
+                { "start": 47.048 , "end": 51.857 },
+                { "start": 56.692 , "end": 60.075 },
+                { "start": 62.761 , "end": 65.045 },
+                { "start": 71.921 , "end": 74.145 },
+                { "start": 78.8 , "end": 79.522 }
             ]
         }
     }
