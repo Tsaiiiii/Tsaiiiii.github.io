@@ -5,7 +5,8 @@ const videoFiles = {
         "subtitlesSrc": {
             "Jonathan": "subtitles/subtitles2_jonathan.vtt",
             "Pete": "subtitles/subtitles2_pete.vtt",
-            "Anna": "subtitles/subtitles2_anna.vtt"
+            "Anna": "subtitles/subtitles2_anna.vtt",
+            "default": "subtitles/subtitles2_anna.vtt"
         },
         "muteSegments": {
             "Jonathan": [
@@ -35,7 +36,7 @@ const videoFiles = {
         "subtitlesSrc": {
             "Anna": "subtitles/10_A.vtt",
             "Ashley": "subtitles/10_B.vtt",
-            "default": "subtitles/10_practice",
+            "default": "subtitles/10_practice.vtt"
         },
         "muteSegments": {
             "Anna": [

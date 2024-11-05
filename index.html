@@ -649,15 +649,16 @@
             const existingTracks = videoElement.querySelectorAll('track');
             existingTracks.forEach(track => track.remove());
 
-            const character = muteCharacterSelect.value;
+            let character = muteCharacterSelect.value;
+
+            if(!character)
+            {
+                character = 'default';
+            }
             const subtitleSrc = videoFiles[videoKey].subtitlesSrc[character];
 
-            // 如果未選擇角色，使用預設的字幕檔
-            if (!subtitleSrc) {
-                subtitleSrc = videoFiles[videoKey].subtitlesSrc["default"];
-            }
-
             if (subtitleSrc) {
+                console.log("subtitleSrc", subtitleSrc);
                 const track = document.createElement('track');
                 track.kind = 'subtitles';
                 track.label = 'English';
@@ -671,17 +672,6 @@
             practiceVideoElement.src = videoFiles[videoKey].src;
             practiceVideoElement.muted = false;
             practiceVideoElement.load();
-
-            // 如果 `practiceVideoElement` 的字幕源未設置，則加上字幕
-            if (subtitleSrc) {
-                const practiceTrack = document.createElement('track');
-                practiceTrack.kind = 'subtitles';
-                practiceTrack.label = 'English';
-                practiceTrack.srclang = 'en';
-                practiceTrack.src = subtitleSrc;
-                practiceTrack.default = true;
-                practiceVideoElement.appendChild(practiceTrack);
-            }
 
             // 監聽影片播放事件，在播放時播放對應的音訊
             videoElement.addEventListener('play', function() {
