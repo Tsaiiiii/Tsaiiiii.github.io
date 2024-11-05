@@ -103,8 +103,8 @@ const videoFiles = {
         "src": "mp4/video16.mp4",
         "audioSrc": "wav/16_wav.wav",
         "subtitlesSrc": {
-            "Anna": "subtitles/16_A.vtt",
-            "Marsha": "subtitles/16_B.vtt",
+            "Interviewer": "subtitles/16_A.vtt",
+            "Interviewee": "subtitles/16_B.vtt",
             "default": "subtitles/16_practice.vtt"
         },
         "muteSegments": {
@@ -156,6 +156,125 @@ const videoFiles = {
                 { "start": 178.139 , "end": 181.251 },
                 { "start": 183.451 , "end": 184.063 },
                 { "start": 184.879 , "end": 185.555 }
+            ]
+        }
+    },
+    "Lesson 17": {
+        "src": "mp4/video17.mp4",
+        "audioSrc": "wav/17_wav.wav",
+        "subtitlesSrc": {
+            "Anna": "subtitles/17_A.vtt",
+            "Marsha": "subtitles/17_B.vtt",
+            "default": "subtitles/17_practice.vtt"
+        },
+        "muteSegments": {
+            "Anna": [
+                { "start": 1.72 , "end": 14.215 },
+                { "start": 19.126 , "end": 22.93 },
+                { "start": 25.87 , "end": 33.42 },
+                { "start": 40.44 , "end": 43.896 },
+                { "start": 46.008 , "end": 46.976 },
+                { "start": 52.012 , "end": 56.376 },
+                { "start": 60.496 , "end": 62.58 },
+                { "start": 65.756 , "end": 71.349 },
+                { "start": 74.985 , "end": 78.828 }
+            ],
+            "Marsha": [
+                { "start": 14.368 , "end": 18.964 },
+                { "start": 23.23 , "end": 25.74 },
+                { "start": 33.84 , "end": 39.58 },
+                { "start": 44.048 , "end": 45.816 },
+                { "start": 47.048 , "end": 51.857 },
+                { "start": 56.692 , "end": 60.075 },
+                { "start": 62.761 , "end": 65.045 },
+                { "start": 71.921 , "end": 74.145 },
+                { "start": 78.8 , "end": 79.522 }
+            ]
+        }
+    },
+    "Lesson 18": {
+        "src": "mp4/video18.mp4",
+        "audioSrc": "wav/18_wav.wav",
+        "subtitlesSrc": {
+            "Anna": "subtitles/18_A.vtt",
+            "Caty": "subtitles/18_B.vtt",
+            "default": "subtitles/18_practice.vtt"
+        },
+        "muteSegments": {
+            "Anna": [
+                { "start": 0.0 , "end": 13.603 },
+                { "start": 22.953 , "end": 24.425 },
+                { "start": 28.995 , "end": 29.723 },
+                { "start": 35.395 , "end": 53.407 },
+                { "start": 62.775 , "end": 63.791 },
+                { "start": 66.919 , "end": 71.231 },
+                { "start": 77.335 , "end": 97.407 },
+                { "start": 102.055 , "end": 104.835 },
+                { "start": 111.837 , "end": 125.325 },
+                { "start": 132.141 , "end": 138.627 },
+                { "start": 142.835 , "end": 168.845 },
+                { "start": 175.525 , "end": 176.805 },
+                { "start": 178.725 , "end": 179.385 },
+                { "start": 188.465 , "end": 191.005 },
+                { "start": 198.561 , "end": 219.729 },
+                { "start": 226.625 , "end": 233.177 },
+                { "start": 241.415 , "end": 246.493 }
+            ],
+            "Caty": [
+                { "start": 14.353 , "end": 22.801 },
+                { "start": 24.585 , "end": 26.495 },
+                { "start": 29.859 , "end": 32.415 },
+                { "start": 53.511 , "end": 62.435 },
+                { "start": 63.983 , "end": 66.743 },
+                { "start": 71.423 , "end": 74.315 },
+                { "start": 97.551 , "end": 100.955 },
+                { "start": 105.575 , "end": 111.709 },
+                { "start": 125.445 , "end": 131.957 },
+                { "start": 138.811 , "end": 141.415 },
+                { "start": 168.746 , "end": 175.105 },
+                { "start": 176.885 , "end": 178.605 },
+                { "start": 179.845 , "end": 187.365 },
+                { "start": 193.425 , "end": 198.377 },
+                { "start": 219.597 , "end": 226.505 },
+                { "start": 233.241 , "end": 240.405 }
+            ]
+        }
+    },
+    "Lesson 19": {
+        "src": "mp4/video19.mp4",
+        "audioSrc": "wav/19_wav.wav",
+        "subtitlesSrc": {
+            "Anna": "subtitles/19_A.vtt",
+            "Caty": "subtitles/19_B.vtt",
+            "default": "subtitles/19_practice.vtt"
+        },
+        "muteSegments": {
+            "Anna": [
+                { "start": 0.21 , "end": 26.989 },
+                { "start": 30.669 , "end": 32.021 },
+                { "start": 38.173 , "end": 51.861 },
+                { "start": 58.669 , "end": 62.995 },
+                { "start": 68.795 , "end": 72.095 },
+                { "start": 79.185 , "end": 83.645 },
+                { "start": 91.137 , "end": 99.185 },
+                { "start": 115.775 , "end": 119.835 },
+                { "start": 131.905 , "end": 140.497 },
+                { "start": 145.721 , "end": 152.077 },
+                { "start": 152.722 , "end": 154.73 },
+                { "start": 160.643 , "end": 178.885 }
+            ],
+            "Caty": [
+                { "start": 27.137 , "end": 30.493 },
+                { "start": 32.173 , "end": 38.021 },
+                { "start": 52.013 , "end": 58.723 },
+                { "start": 63.155 , "end": 67.815 },
+                { "start": 72.995 , "end": 77.735 },
+                { "start": 84.025 , "end": 90.969 },
+                { "start": 99.345 , "end": 114.275 },
+                { "start": 120.215 , "end": 130.635 },
+                { "start": 140.641 , "end": 145.617 },
+                { "start": 152.071 , "end": 152.648 },
+                { "start": 154.937 , "end": 161.075 }
             ]
         }
     }
