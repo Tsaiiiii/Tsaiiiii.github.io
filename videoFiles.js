@@ -1,35 +1,4 @@
 const videoFiles = {
-    "Lesson 2": {
-        "src": "mp4/video2.mp4",
-        "audioSrc": "wav/2_wav.wav",
-        "subtitlesSrc": {
-            "Jonathan": "subtitles/subtitles2_jonathan.vtt",
-            "Pete": "subtitles/subtitles2_pete.vtt",
-            "Anna": "subtitles/subtitles2_anna.vtt",
-            "default": "subtitles/subtitles2_anna.vtt"
-        },
-        "muteSegments": {
-            "Jonathan": [
-                { "start": 1.25, "end": 3.806 },
-                { "start": 6.85, "end": 7.966 },
-                { "start": 10.93, "end": 12.106 },
-                { "start": 13.092, "end": 16.414 },
-                { "start": 21.57, "end": 24.32 },
-                { "start": 38.06, "end": 39.590 }
-            ],
-            "Pete": [
-                { "start": 3.988, "end": 6.510 },
-                { "start": 25.05, "end": 34.918 }
-            ],
-            "Anna": [
-                { "start": 8.068, "end": 10.19 },
-                { "start": 12.218, "end": 12.974 },
-                { "start": 16.612, "end": 21.15 },
-                { "start": 35.004, "end": 37.99 },
-                { "start": 42.01, "end": 44.92 }
-            ]
-        }
-    },
     "Lesson 10": {
         "src": "mp4/video10.mp4",
         "audioSrc": "wav/10_wav.wav",
