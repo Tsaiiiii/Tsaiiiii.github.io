@@ -449,6 +449,12 @@
 
             // 為下一次錄音創建新的上下文
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+            // 將影片重置到開頭
+            if (videoElement) {
+                videoElement.currentTime = 0; // 重置播放位置
+                videoElement.pause(); // 確保影片暫停，以便重新錄音
+            }
         }
 
         // Initialize a save counter for each character
