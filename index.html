@@ -313,6 +313,12 @@
             if (audioContext && audioContext.state !== 'closed') {
                 await audioContext.close();
             }
+
+            // 將影片重置到開頭
+            if (videoElement) {
+                videoElement.currentTime = 0; // 重置播放位置
+                videoElement.pause(); // 確保影片暫停，以便重新錄音
+            }
         }
 
         let videoSource;
@@ -526,6 +532,7 @@
                     updateCharacterIndicators(selectedCharacter);
                 }
                 console.log(`Saved recording for character: ${selectedCharacter}.\nSave count: ${characterSaveCounters[selectedCharacter]}`);
+                console.log("Timestamp:", currentTimestamp, "\n");
                 a.href = URL.createObjectURL(wavBlob); // Create a URL for the WAV file
                 a.download = `${username}_${selectedCharacter}_${characterSaveCounters[selectedCharacter]}_${currentTimestamp}.wav`; // Use the timestamp as the filename
                 document.body.appendChild(a); // Append the element to the page
