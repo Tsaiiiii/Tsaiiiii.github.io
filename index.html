@@ -430,37 +430,48 @@
                 stopRecording();
             }
 
+            if (isRecording) {
+                toggleRecording(); // 自動點選暫停按鈕
+            }
+
+            // 將影片重置到開頭
+            if (videoElement) {
+                videoElement.pause();
+                videoElement.currentTime = 0; // 重置播放位置
+                // videoElement.pause(); // 確保影片暫停，以便重新錄音
+            }
+
+            const recordedAudioElement = document.getElementById('recordedAudio');
+            if (recordedAudioElement) {
+                recordedAudioElement.pause();
+                recordedAudioElement.currentTime = 0; // 重置播放位置
+                // videoElement.pause(); // 確保影片暫停，以便重新錄音
+            }
+            
             document.getElementById("save_btn").style.display = "none";
 
             const date = new Date().toISOString().split('T')[0];
             const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
             const currentTimestamp = date + ' ' + time;
             console.log("Click reset recording\nTimestamp:", currentTimestamp, "\n");
-
-            const recordedAudioElement = document.getElementById('recordedAudio');
             
-            if (recordedSource) {
-                recordedSource.disconnect();
-                recordedSource = null; // 重置為下一次使用
-            }
-            if (merger) {
-                merger.disconnect();
-                merger = null; // 重置為下一次使用
-            }
+            // if (recordedSource) {
+            //     recordedSource.disconnect();
+            //     recordedSource = null; // 重置為下一次使用
+            // }
+            // if (merger) {
+            //     merger.disconnect();
+            //     merger = null; // 重置為下一次使用
+            // }
 
-            // 如果需要，重置上下文
-            if (audioContext && audioContext.state !== 'closed') {
-                audioContext.close();
-            }
+            // // 如果需要，重置上下文
+            // if (audioContext && audioContext.state !== 'closed') {
+            //     audioContext.close();
+            // }
 
-            // 為下一次錄音創建新的上下文
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            // // 為下一次錄音創建新的上下文
+            // audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-            // 將影片重置到開頭
-            if (videoElement) {
-                videoElement.currentTime = 0; // 重置播放位置
-                videoElement.pause(); // 確保影片暫停，以便重新錄音
-            }
         }
 
         // Initialize a save counter for each character
