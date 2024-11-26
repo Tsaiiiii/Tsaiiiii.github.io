@@ -147,7 +147,8 @@
                         <blockquote></blockquote>
     
                         <button class="myButton" id="recordButton" onclick="toggleRecording()" disabled>錄音</button>
-                        <button class="myButton" onclick="playRecordedAudio()">播放</button>
+                        <!-- <button class="myButton" onclick="playRecordedAudio()">播放</button> -->
+                        <button class="myButton" id="playButton" onclick="togglePlayStop()">播放</button>
                         <button id="save_btn" class="myButton" onclick="downloadRecording()" style="display: none;">保存</button>
                         <blockquote></blockquote>
                         <div id="saveIndicators" style="display: flex; gap: 10px;">
@@ -279,6 +280,7 @@
 
             const videoElement = document.getElementById('videoElement');
             videoElement.play();
+            videoElement.controls = false;
 
             videoElement.addEventListener('ended', async () => {
                 document.getElementById("save_btn").style.display = "block";
@@ -327,6 +329,55 @@
         let isVsConnected = false;
         let isRsConnected = false;
         let isMerConnected = false;
+
+        let isPlaying = false; // 用於跟踪播放狀態
+
+        async function togglePlayStop() {
+            const playButton = document.getElementById('playButton');
+            const videoElement = document.getElementById('videoElement');
+            // let recordedAudioElement = document.getElementById('recordedAudio');
+
+            if (!recordedAudioURL) {
+                console.error("No recorded audio available to play.");
+                alert("沒有可播放的錄製音頻！");
+                return;
+            }
+            
+            // if (!recordedAudioElement) {
+            //     recordedAudioElement = document.createElement('audio');
+            //     recordedAudioElement.id = 'recordedAudio';
+            //     recordedAudioElement.style.display = 'none';
+            //     document.body.appendChild(recordedAudioElement);
+            // }
+
+            if (!isPlaying) {
+                // 開始播放
+                document.getElementById('playButton').classList.add('recording');
+                playButton.textContent = '暫停';
+                playRecordedAudio();
+                isPlaying = true;
+            } else {
+                // 停止播放
+                document.getElementById('playButton').classList.remove('recording');
+                playButton.textContent = '播放';
+                // 將影片重置到開頭
+                if (videoElement) {
+                    videoElement.pause();
+                    // videoElement.currentTime = 0; // 重置播放位置
+                    // videoElement.pause(); // 確保影片暫停，以便重新錄音
+                }
+
+                const recordedAudioElement = document.getElementById('recordedAudio');
+                if (recordedAudioElement) {
+                    recordedAudioElement.pause();
+                    // recordedAudioElement.currentTime = 0; // 重置播放位置
+                    // videoElement.pause(); // 確保影片暫停，以便重新錄音
+                }
+                // recordedAudioElement.pause();
+                // videoElement.pause();
+                isPlaying = false;
+            }
+        }
 
         async function playRecordedAudio() {
             if (!isRsConnected) {
@@ -406,7 +457,13 @@
                 }
             };
 
-            recordedAudioElement.addEventListener('ended', cleanup);
+            recordedAudioElement.addEventListener('ended', () => {
+                cleanup();
+                if(isPlaying)
+                {
+                    togglePlayStop();
+                }
+            });
             recordedAudioElement.addEventListener('play', () => {
                 videoElement.currentTime = recordedAudioElement.currentTime;
                 videoElement.play();
@@ -447,7 +504,7 @@
                 recordedAudioElement.currentTime = 0; // 重置播放位置
                 // videoElement.pause(); // 確保影片暫停，以便重新錄音
             }
-            
+
             document.getElementById("save_btn").style.display = "none";
 
             const date = new Date().toISOString().split('T')[0];
