@@ -775,9 +775,9 @@
             practiceVideoElement.muted = false;
             practiceVideoElement.load();
 
-            // **清除`practiceVideoElement`現有的字幕**
-            const practiceTracks = practiceVideoElement.querySelectorAll('track');
-            practiceTracks.forEach(track => track.remove());
+            // // **清除`practiceVideoElement`現有的字幕**
+            // const practiceTracks = practiceVideoElement.querySelectorAll('track');
+            // practiceTracks.forEach(track => track.remove());
 
             // 如果 `practiceVideoElement` 的字幕源未設置，則加上字幕
             if (subtitleSrc) {
