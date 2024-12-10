@@ -262,10 +262,7 @@
                 link.href = image;
                 link.download = `Bug_Report_${currentTimestamp.replace(/[: ]/g, '_')}.png`;
                 link.click();
-
-                // 5. 儲存 Logfile
-                saveLogfile(logFileContent);
-                alert("Bug report submitted successfully!");
+                
             } catch (error) {
                 console.error("Failed to capture screenshot:", error);
                 alert("Bug report submission failed. Please try again.");
