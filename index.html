@@ -130,8 +130,9 @@
                 </div>
     
                 <div id="record_mode" class="mainContent">
+                    <button id="reportBugButton" style="float:right;" ><img src="tracking.png" style="width: 30px;height:30px;"></button>
                     <button id="downloadLogBtn" style="float:right;"><img src="files.png" style="width: 30px;height:30px;"></button>
-                    <button class="button" onclick="resetRecording()" style="float:right;"><img src="refresh.png" style="width: 30px;height:30px;"></button>
+                    <button class="button" onclick="resetRecording()" style="float:right;"><img src="refresh.png"  style="width: 30px;height:30px;"></button>
                     
                     <video controls width="900" id="videoElement">
                         <track kind="subtitles" label="English" srclang="en" default>
@@ -165,6 +166,7 @@
     </div>
 
     <script src="videoFiles.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         let mediaRecorder;
         let isRecording = false;
@@ -235,6 +237,41 @@
             document.getElementById('recordButton').disabled = false;
         });
 
+        document.getElementById('reportBugButton').addEventListener('click', async () => {
+            // 1. 記錄時間戳
+            const date = new Date().toISOString().split('T')[0];
+            const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
+            const currentTimestamp = `${date} ${time}`;
+            console.log("Bug reported at:", currentTimestamp);
+
+            // 2. 顯示問題輸入框
+            const bugDescription = prompt("Please describe the issue you encountered:");
+            if (!bugDescription) {
+                alert("Bug report cancelled.");
+                return;
+            }
+
+            // 3. 截圖畫面
+            const logFileContent = `Bug reported at ${currentTimestamp}\nDescription: ${bugDescription}\n\n`;
+            try {
+                const canvas = await html2canvas(document.body); // 截取整個頁面
+                const image = canvas.toDataURL('image/png');
+
+                // 4. 儲存截圖
+                const link = document.createElement('a');
+                link.href = image;
+                link.download = `Bug_Report_${currentTimestamp.replace(/[: ]/g, '_')}.png`;
+                link.click();
+
+                // 5. 儲存 Logfile
+                saveLogfile(logFileContent);
+                alert("Bug report submitted successfully!");
+            } catch (error) {
+                console.error("Failed to capture screenshot:", error);
+                alert("Bug report submission failed. Please try again.");
+            }
+        });
+
         function toggleRecording() {
             const date = new Date().toISOString().split('T')[0];
             const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
@@ -247,10 +284,15 @@
             playButton.disabled = true;
 
             if (!isRecording) {
-                startRecording();
-                document.getElementById('recordButton').classList.add('recording');
-                document.getElementById('recordButton').textContent = '暫停';
-                console.log("Click start recording\nTimestamp:", currentTimestamp, "\n");
+                const selected_character = document.getElementById('muteCharacter').value;
+                if(selected_character != "")
+                {
+                    startRecording();
+                    document.getElementById('recordButton').classList.add('recording');
+                    document.getElementById('recordButton').textContent = '暫停';
+                    console.log("Click start recording\nTimestamp:", currentTimestamp, "\n");
+                    isRecording = !isRecording;
+                }
             } else {
                 stopRecording();
                 document.getElementById('recordButton').classList.remove('recording');
@@ -258,8 +300,8 @@
                 console.log("Click stop recording\nTimestamp:", currentTimestamp, "\n");
                 // 啟用播放按鈕
                 playButton.disabled = false;
+                isRecording = !isRecording;
             }
-            isRecording = !isRecording;
         }
 
         function showMainContent(contentId) {
