@@ -242,7 +242,6 @@
             const date = new Date().toISOString().split('T')[0];
             const time = new Date().toISOString().split('T')[1].split('.')[0].replace(/[:.]/g, ':');
             const currentTimestamp = `${date} ${time}`;
-            console.log("Bug reported at:", currentTimestamp);
 
             // 2. 顯示問題輸入框
             const bugDescription = prompt("Please describe the issue you encountered:");
@@ -250,6 +249,11 @@
                 alert("Bug report cancelled.");
                 return;
             }
+
+            // 將問題描述加入 logData
+            logData.push(`Bug reported at: ${currentTimestamp}`);
+            logData.push(`Description: ${bugDescription}`);
+            logData.push("\n");
 
             // 3. 截圖畫面
             const logFileContent = `Bug reported at ${currentTimestamp}\nDescription: ${bugDescription}\n\n`;
