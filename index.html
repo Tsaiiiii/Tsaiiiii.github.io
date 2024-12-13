@@ -10,6 +10,25 @@
 
       gtag('config', 'G-G9TKT0YGGM');
     </script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+    <script>
+      window.addEventListener("load", function() {
+        window.cookieconsent.initialise({
+          palette: {
+            popup: { background: "#000" },
+            button: { background: "#f1d600" }
+          },
+          theme: "classic",
+          content: {
+            message: "我們使用 Cookie 來提升用戶體驗。",
+            dismiss: "接受",
+            link: "了解更多",
+            href: "/privacy-policy.html"
+          }
+        });
+      });
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dubbing</title>
