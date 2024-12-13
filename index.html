@@ -317,6 +317,7 @@
                 if(selected_character != "")
                 {
                     startRecording();
+                    document.getElementById("save_btn").style.display = "none";
                     document.getElementById('recordButton').classList.add('recording');
                     document.getElementById('recordButton').textContent = '暫停';
                     console.log("Click start recording\nTimestamp:", currentTimestamp, "\n");
