@@ -353,14 +353,17 @@
 
         async function startRecording() {
             recordedChunks = [];
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            mediaRecorder = new MediaRecorder(stream);
-            mediaRecorder.ondataavailable = handleDataAvailable;
-            mediaRecorder.start();
-
             const videoElement = document.getElementById('videoElement');
-            videoElement.play();
-            videoElement.controls = false;
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+            if (videoElement.readyState === 4) {
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.ondataavailable = handleDataAvailable;
+                mediaRecorder.start();
+
+                videoElement.play();
+                videoElement.controls = false;
+            }
 
             videoElement.addEventListener('ended', async () => {
                 document.getElementById("save_btn").style.display = "block";
