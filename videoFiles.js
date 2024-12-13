@@ -320,7 +320,7 @@ const videoFiles = {
         },
         "muteSegments": {
             "Anna": [
-                { "start": 1.0 , "end": 35.753 },
+                { "start": 0.001 , "end": 35.753 },
                 { "start": 41.425 , "end": 44.205 },
                 { "start": 48.385 , "end": 50.885 },
                 { "start": 52.609 , "end": 58.751 },
