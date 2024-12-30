@@ -446,14 +446,14 @@ const videoFiles = {
         "audioSrc": "wav/29_wav.wav",
         "subtitlesSrc": {
             "Anna": "subtitles/29_A.vtt",
-            "Others": "subtitles/29_B.vtt",
+            "Marsha": "subtitles/29_B.vtt",
             "default": "subtitles/29_practice.vtt"
         },
         "muteSegments": {
             "Anna": [
-                { "start": 0.48 , "end": 14.808 },
+                { "start": 0.2 , "end": 14.808 },
                 { "start": 17.176 , "end": 22.696 },
-                { "start": 25.36 , "end": 32.11 },
+                { "start": 25.06 , "end": 32.11 },
                 { "start": 34.474 , "end": 35.89 },
                 { "start": 39.418 , "end": 43.906 },
                 { "start": 48.794 , "end": 52.29 },
@@ -469,11 +469,11 @@ const videoFiles = {
                 { "start": 160.342 , "end": 175.29 }
             ],
             "Marsha": [
-                { "start": 14.904 , "end": 17.032 },
+                { "start": 14.670 , "end": 17.032 },
                 { "start": 22.888 , "end": 25.06 },
                 { "start": 32.109 , "end": 34.338 },
-                { "start": 36.01 , "end": 39.266 },
-                { "start": 44.018 , "end": 48.658 },
+                { "start": 35.940 , "end": 39.266 },
+                { "start": 443.850 , "end": 48.658 },
                 { "start": 52.45 , "end": 56.504 },
                 { "start": 63.152 , "end": 65.288 },
                 { "start": 72.192 , "end": 74.536 },
