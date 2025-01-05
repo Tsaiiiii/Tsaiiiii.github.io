@@ -536,5 +536,59 @@ const videoFiles = {
                 { "start": 172.492 , "end": 177.64 }
             ]
         }
+    },
+    "Lesson 31": {
+        "src": "mp4/video31.mp4",
+        "audioSrc": "wav/31_wav.wav",
+        "subtitlesSrc": {
+            "Anna": "subtitles/31_A.vtt",
+            "Others": "subtitles/31_B.vtt",
+            "default": "subtitles/31_practice.vtt"
+        },
+        "muteSegments": {
+            "Anna": [
+                { "start": 0.24 , "end": 14.424 },
+                { "start": 16.928 , "end": 20.776 },
+                { "start": 25.264 , "end": 30.366 },
+                { "start": 32.406 , "end": 36.062 },
+                { "start": 38.814 , "end": 55.102 },
+                { "start": 55.246 , "end": 56.676 },
+                { "start": 56.798 , "end": 58.456 },
+                { "start": 58.568 , "end": 59.261 },
+                { "start": 62.776 , "end": 64.776 },
+                { "start": 66.008 , "end": 66.76 },
+                { "start": 68.048 , "end": 71.208 },
+                { "start": 73.04 , "end": 74.056 },
+                { "start": 75.528 , "end": 76.52 },
+                { "start": 81.096 , "end": 84.27 },
+                { "start": 90.864 , "end": 97.872 },
+                { "start": 106.304 , "end": 109.22 },
+                { "start": 113.288 , "end": 117.64 },
+                { "start": 130.88 , "end": 132.904 },
+                { "start": 133.896 , "end": 154.0 },
+                { "start": 154.3 , "end": 156.88 },
+                { "start": 157.82 , "end": 163.96 },
+                { "start": 167.58 , "end": 178.96 }
+            ],
+            "Others": [
+                { "start": 14.552 , "end": 15.528 },
+                { "start": 15.624 , "end": 16.776 },
+                { "start": 20.928 , "end": 25.128 },
+                { "start": 30.558 , "end": 32.302 },
+                { "start": 36.166 , "end": 38.718 },
+                { "start": 59.6 , "end": 62.712 },
+                { "start": 64.888 , "end": 65.896 },
+                { "start": 66.84 , "end": 67.896 },
+                { "start": 71.344 , "end": 72.92 },
+                { "start": 74.168 , "end": 75.416 },
+                { "start": 76.64 , "end": 80.952 },
+                { "start": 83.87 , "end": 90.768 },
+                { "start": 98.016 , "end": 106.208 },
+                { "start": 110.32 , "end": 113.176 },
+                { "start": 117.76 , "end": 130.76 },
+                { "start": 133.072 , "end": 133.832 },
+                { "start": 164.3 , "end": 167.28 }
+            ]
+        }
     }
 }
