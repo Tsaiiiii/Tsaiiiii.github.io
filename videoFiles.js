@@ -590,5 +590,41 @@ const videoFiles = {
                 { "start": 162.920 , "end": 167.28 }
             ]
         }
+    },
+    "Lesson 35": {
+        "src": "mp4/video35.mp4",
+        "audioSrc": "wav/35_wav.wav",
+        "subtitlesSrc": {
+            "Anna": "subtitles/35_A.vtt",
+            "Marsha": "subtitles/35_B.vtt",
+            "default": "subtitles/35_practice.vtt"
+        },
+        "muteSegments": {
+            "Anna": [
+                { "start": 0.72 , "end": 22.808 },
+                { "start": 25.984 , "end": 30.83 },
+                { "start": 38.282 , "end": 40.19 },
+                { "start": 44.33 , "end": 62.92 },
+                { "start": 69.268 , "end": 73.32 },
+                { "start": 89.838 , "end": 102.318 },
+                { "start": 106.478 , "end": 113.038 },
+                { "start": 125.198 , "end": 131.118 },
+                { "start": 138.192 , "end": 140.28 },
+                { "start": 144.08 , "end": 147.576 },
+                { "start": 149.36 , "end": 149.64 }
+            ],
+            "Marsha": [
+                { "start": 22.984 , "end": 25.848 },
+                { "start": 31.0 , "end": 38.114 },
+                { "start": 40.65 , "end": 43.99 },
+                { "start": 64.34 , "end": 69.116 },
+                { "start": 73.94 , "end": 89.646 },
+                { "start": 102.494 , "end": 106.286 },
+                { "start": 113.214 , "end": 125.006 },
+                { "start": 131.294 , "end": 138.024 },
+                { "start": 140.44 , "end": 143.5 },
+                { "start": 147.728 , "end": 149.06 }
+            ]
+        }
     }
 }
