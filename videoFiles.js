@@ -391,56 +391,56 @@ const videoFiles = {
     //         ]
     //     }
     // },
-    "Lesson 27": {
-        "src": "mp4/video27.mp4",
-        "audioSrc": "wav/27_wav.wav",
-        "subtitlesSrc": {
-            "Anna": "subtitles/27_A.vtt",
-            "Others": "subtitles/27_B.vtt",
-            "default": "subtitles/27_practice.vtt"
-        },
-        "muteSegments": {
-            "Anna": [
-                { "start": 0.4 , "end": 19.317 },
-                { "start": 20.930 , "end": 24.839 },
-                { "start": 27.000 , "end": 37.68 },
-                { "start": 42.070 , "end": 46.468 },
-                { "start": 52.540 , "end": 53.94 },
-                { "start": 60.140 , "end": 61.28 },
-                { "start": 65.310 , "end": 70.163 },
-                { "start": 77.150 , "end": 79.984 },
-                { "start": 82.770 , "end": 84.672 },
-                { "start": 88.970 , "end": 92.048 },
-                { "start": 93.92 , "end": 96.08 },
-                { "start": 98.430 , "end": 108.016 },
-                { "start": 113.024 , "end": 117.85 },
-                { "start": 119.600 , "end": 123.642 },
-                { "start": 127.17 , "end": 131.45 },
-                { "start": 139.880 , "end": 146.028 },
-                { "start": 148.600 , "end": 153.708 },
-                { "start": 157.130 , "end": 179.302 }
-            ],
-            "Others": [
-                { "start": 19.990 , "end": 20.663 },
-                { "start": 24.920 , "end": 26.92 },
-                { "start": 37.860 , "end": 42.004 },
-                { "start": 46.350 , "end": 52.468 },
-                { "start": 54.06 , "end": 60.12 },
-                { "start": 61.200 , "end": 65.248 },
-                { "start": 70.104 , "end": 77.312 },
-                { "start": 79.960 , "end": 82.864 },
-                { "start": 84.710 , "end": 89.184 },
-                { "start": 92.100 , "end": 93.76 },
-                { "start": 96.110 , "end": 98.56 },
-                { "start": 108.208 , "end": 113.222 },
-                { "start": 117.800 , "end": 119.61 },
-                { "start": 123.660 , "end": 126.11 },
-                { "start": 131.670 , "end": 139.912 },
-                { "start": 146.020 , "end": 148.446 },
-                { "start": 153.730 , "end": 157.1 }
-            ]
-        }
-    },
+    // "Lesson 27": {
+    //     "src": "mp4/video27.mp4",
+    //     "audioSrc": "wav/27_wav.wav",
+    //     "subtitlesSrc": {
+    //         "Anna": "subtitles/27_A.vtt",
+    //         "Others": "subtitles/27_B.vtt",
+    //         "default": "subtitles/27_practice.vtt"
+    //     },
+    //     "muteSegments": {
+    //         "Anna": [
+    //             { "start": 0.4 , "end": 19.317 },
+    //             { "start": 20.930 , "end": 24.839 },
+    //             { "start": 27.000 , "end": 37.68 },
+    //             { "start": 42.070 , "end": 46.468 },
+    //             { "start": 52.540 , "end": 53.94 },
+    //             { "start": 60.140 , "end": 61.28 },
+    //             { "start": 65.310 , "end": 70.163 },
+    //             { "start": 77.150 , "end": 79.984 },
+    //             { "start": 82.770 , "end": 84.672 },
+    //             { "start": 88.970 , "end": 92.048 },
+    //             { "start": 93.92 , "end": 96.08 },
+    //             { "start": 98.430 , "end": 108.016 },
+    //             { "start": 113.024 , "end": 117.85 },
+    //             { "start": 119.600 , "end": 123.642 },
+    //             { "start": 127.17 , "end": 131.45 },
+    //             { "start": 139.880 , "end": 146.028 },
+    //             { "start": 148.600 , "end": 153.708 },
+    //             { "start": 157.130 , "end": 179.302 }
+    //         ],
+    //         "Others": [
+    //             { "start": 19.990 , "end": 20.663 },
+    //             { "start": 24.920 , "end": 26.92 },
+    //             { "start": 37.860 , "end": 42.004 },
+    //             { "start": 46.350 , "end": 52.468 },
+    //             { "start": 54.06 , "end": 60.12 },
+    //             { "start": 61.200 , "end": 65.248 },
+    //             { "start": 70.104 , "end": 77.312 },
+    //             { "start": 79.960 , "end": 82.864 },
+    //             { "start": 84.710 , "end": 89.184 },
+    //             { "start": 92.100 , "end": 93.76 },
+    //             { "start": 96.110 , "end": 98.56 },
+    //             { "start": 108.208 , "end": 113.222 },
+    //             { "start": 117.800 , "end": 119.61 },
+    //             { "start": 123.660 , "end": 126.11 },
+    //             { "start": 131.670 , "end": 139.912 },
+    //             { "start": 146.020 , "end": 148.446 },
+    //             { "start": 153.730 , "end": 157.1 }
+    //         ]
+    //     }
+    // },
     "Lesson 29": {
         "src": "mp4/video29.mp4",
         "audioSrc": "wav/29_wav.wav",
