@@ -638,28 +638,26 @@ const videoFiles = {
         "muteSegments": {
             "Anna": [
                 { "start": 0.24 , "end": 21.34 },
-                { "start": 26.52 , "end": 29.18 },
-                { "start": 31.07 , "end": 37.142 },
-                { "start": 37.326 , "end": 38.33 },
-                { "start": 38.83 , "end": 42.33 },
-                { "start": 45.63 , "end": 49.69 },
+                { "start": 26.270 , "end": 29.18 },
+                { "start": 30.680 , "end": 42.200 },
+                { "start": 45.430 , "end": 49.69 },
                 { "start": 54.99 , "end": 65.198 },
-                { "start": 68.878 , "end": 70.81 },
-                { "start": 78.63 , "end": 84.45 },
-                { "start": 87.378 , "end": 91.714 },
+                { "start": 68.550 , "end": 70.81 },
+                { "start": 78.350 , "end": 84.45 },
+                { "start": 87.270 , "end": 91.714 },
                 { "start": 103.52 , "end": 104.703 },
                 { "start": 106.046 , "end": 119.041 }
             ],
             "Marsha": [
                 { "start": 21.92 , "end": 26.44 },
-                { "start": 29.79 , "end": 30.53 },
-                { "start": 42.67 , "end": 45.29 },
+                { "start": 29.140 , "end": 30.53 },
+                { "start": 42.170 , "end": 45.29 },
                 { "start": 49.896 , "end": 54.45 },
                 { "start": 65.374 , "end": 68.686 },
-                { "start": 71.35 , "end": 78.21 },
+                { "start": 70.800 , "end": 78.21 },
                 { "start": 84.97 , "end": 87.186 },
                 { "start": 92.283 , "end": 102.75 },
-                { "start": 105.169 , "end": 106.091 }
+                { "start": 104.800 , "end": 106.091 }
             ]
         }
     },
@@ -668,35 +666,35 @@ const videoFiles = {
         "audioSrc": "wav/37_wav.wav",
         "subtitlesSrc": {
             "Anna": "subtitles/37_A.vtt",
-            "Marsha": "subtitles/37_B.vtt",
+            "Others": "subtitles/37_B.vtt",
             "default": "subtitles/37_practice.vtt"
         },
         "muteSegments": {
             "Anna": [
                 { "start": 0.72 , "end": 18.36 },
-                { "start": 21.864 , "end": 26.056 },
+                { "start": 21.550 , "end": 26.056 },
                 { "start": 29.264 , "end": 32.974 },
-                { "start": 39.846 , "end": 43.486 },
-                { "start": 51.03 , "end": 60.04 },
-                { "start": 64.228 , "end": 66.892 },
-                { "start": 67.908 , "end": 83.674 },
-                { "start": 108.99 , "end": 117.724 },
-                { "start": 128.332 , "end": 136.216 },
-                { "start": 137.976 , "end": 142.032 },
-                { "start": 144.552 , "end": 150.86 },
-                { "start": 152.584 , "end": 158.32 },
-                { "start": 166.042 , "end": 183.2 }
+                { "start": 39.650 , "end": 43.486 },
+                { "start": 50.990 , "end": 60.04 },
+                { "start": 64.000 , "end": 66.892 },
+                { "start": 67.680 , "end": 83.674 },
+                { "start": 108.700 , "end": 117.724 },
+                { "start": 128.080 , "end": 136.216 },
+                { "start": 137.750 , "end": 142.032 },
+                { "start": 144.400 , "end": 150.86 },
+                { "start": 152.360 , "end": 158.32 },
+                { "start": 165.930 , "end": 183.2 }
             ],
-            "Marsha": [
+            "Others": [
                 { "start": 18.52 , "end": 21.688 },
                 { "start": 26.248 , "end": 29.128 },
-                { "start": 33.102 , "end": 39.742 },
-                { "start": 43.678 , "end": 50.91 },
-                { "start": 60.34 , "end": 64.076 },
+                { "start": 32.920 , "end": 39.742 },
+                { "start": 43.480 , "end": 50.91 },
+                { "start": 59.970 , "end": 64.076 },
                 { "start": 67.076 , "end": 67.756 },
-                { "start": 83.852 , "end": 108.83 },
+                { "start": 83.530 , "end": 108.83 },
                 { "start": 117.892 , "end": 128.204 },
-                { "start": 136.348 , "end": 137.792 },
+                { "start": 136.110 , "end": 137.792 },
                 { "start": 142.216 , "end": 144.384 },
                 { "start": 151.16 , "end": 152.448 },
                 { "start": 158.48 , "end": 165.914 }
